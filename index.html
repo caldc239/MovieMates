@@ -13,9 +13,62 @@
     <title>MovieMates</title>
 
     <!-- CSS -->
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" />
+
     <!-- JS -->
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
+
   </head>
 
   <body>
-    <p>Hello there</p>
+    <!-- Home page -->
+    <div data-role="page" id="homePage">
+      <div data-role="header">
+        <a href="#pageMenu" data-role="button" data-icon="bars" data-iconpos="left" data-inline="true">Menu</a>
+        <h1>Home Page</h1>
+      </div>
+      <div data-role="content">
+        <p>Helllllllllllllo there</p>
+      </div>
+    </div>
+
+    <!-- Watch List -->
+    <div data-role="page" id="watchList">
+      <div data-role="header">
+        <a href="#pageMenu" data-role="button" data-icon="bars" data-iconpos="left" data-inline="true">Menu</a>
+      </div>
+      <div data-role="content">
+        <p>This is a watch list</p>
+      </div>
+    </div>
+
+    <!-- Have-Watched List -->
+    <div data-role="page" id="alreadyWatched">
+      <div data-role="header">
+        <a href="#pageMenu" data-role="button" data-icon="bars" data-iconpos="left" data-inline="true">Menu</a>
+      </div>
+      <div data-role="content">
+        <p>This is a have-watched list</p>
+      </div>
+    </div>
+
+    <!--Menu Page-->
+    <div data-role="page" id="pageMenu">
+      <div data-role="header">
+        <a href="#pageMenu" data-role="button" data-icon="bars" data-iconpos="left" data-inline="true">Menu</a>
+        <h1>MovieMates</h1>
+      </div>
+
+      <div data-role="content">
+        <div data-role="controlgroup">
+          <a href="#homePage" data-role="button">Home Page</a>
+          <a href="#watchList" data-role="button">Watch List</a>
+          <a href="#alreadyWatched" data-role="button">Have-Watched List</a>
+        </div>
+      </div>
+    </div>
+
   </body>
+
+</html>
