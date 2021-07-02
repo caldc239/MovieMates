@@ -1,13 +1,4 @@
 <!DOCTYPE html>
-
-<?php
-
-require_once('settings.php');
-
-$login_url = 'https://accounts.google.com/o/oauth2/v2/auth?scope=' . urlencode('https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email') . '&redirect_uri=' . urlencode(CLIENT_REDIRECT_URL) . '&response_type=code&client_id=' . CLIENT_ID . '&access_type=online';
-
-?>
-
 <html lang="en">
 
   <head>
@@ -28,6 +19,15 @@ $login_url = 'https://accounts.google.com/o/oauth2/v2/auth?scope=' . urlencode('
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 
+    <!-- PHP -->
+    <?php
+
+    require_once('settings.php');
+
+    $login_url = 'https://accounts.google.com/o/oauth2/v2/auth?scope=' . urlencode('https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email') . '&redirect_uri=' . urlencode(CLIENT_REDIRECT_URL) . '&response_type=code&client_id=' . CLIENT_ID . '&access_type=online';
+
+?>
+
   </head>
 
   <body>
@@ -40,8 +40,6 @@ $login_url = 'https://accounts.google.com/o/oauth2/v2/auth?scope=' . urlencode('
       </div><!-- /header -->
       <div data-role="content">
         <p>Helllllllllllllo there</p>
-        <p><a href="<?= $https://accounts.google.com/o/oauth2/v2/auth?>" scope="https://www.googleapis.com/auth/userinfo.profile" , "https://www.googleapis.com/auth/userinfo.email" redirect_uri="https://movie-mates2021.herokuapp.com/gauth.php"
-            response_type="code" client_id="1037504993908-c6jlqvqlb8i8huncsdalkvv193hrv9n4.apps.googleusercontent.com" access_type="online">Login with Google</a></p>
       </div>
     </div>
 
