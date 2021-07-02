@@ -1,10 +1,19 @@
 <!DOCTYPE html>
+
+<?php
+
+require_once('settings.php');
+
+$login_url = 'https://accounts.google.com/o/oauth2/v2/auth?scope=' . urlencode('https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email') . '&redirect_uri=' . urlencode(CLIENT_REDIRECT_URL) . '&response_type=code&client_id=' . CLIENT_ID . '&access_type=online';
+
+?>
+
 <html lang="en">
 
   <head>
     <!-- Created by Cassaundra Caldwell
       Date Created: 29 June 2021
-      Date Modified:
+      Date Modified: 2 July 2021
       Description: MovieMates is a web app designed to track movies and TV shows
       a user wants to watch or has watched, provide basic info about them, and
       provide users with the ability to share their lists with friends. -->
@@ -22,21 +31,24 @@
   </head>
 
   <body>
+
     <!-- Home page -->
     <div data-role="page" id="homePage">
+      <!-- header -->
       <div data-role="header">
-        <a href="#pageMenu" data-role="button" data-icon="bars" data-iconpos="left" data-inline="true">Menu</a>
         <h1>Home Page</h1>
-      </div>
+      </div><!-- /header -->
       <div data-role="content">
         <p>Helllllllllllllo there</p>
+        <p><a href="<?= $https://accounts.google.com/o/oauth2/v2/auth?>" scope="https://www.googleapis.com/auth/userinfo.profile" , "https://www.googleapis.com/auth/userinfo.email" redirect_uri="https://movie-mates2021.herokuapp.com/gauth.php"
+            response_type="code" client_id="1037504993908-c6jlqvqlb8i8huncsdalkvv193hrv9n4.apps.googleusercontent.com" access_type="online">Login with Google</a></p>
       </div>
     </div>
 
     <!-- Watch List -->
     <div data-role="page" id="watchList">
       <div data-role="header">
-        <a href="#pageMenu" data-role="button" data-icon="bars" data-iconpos="left" data-inline="true">Menu</a>
+        <h1>Watch List</h1>
       </div>
       <div data-role="content">
         <p>This is a watch list</p>
@@ -46,26 +58,10 @@
     <!-- Have-Watched List -->
     <div data-role="page" id="alreadyWatched">
       <div data-role="header">
-        <a href="#pageMenu" data-role="button" data-icon="bars" data-iconpos="left" data-inline="true">Menu</a>
+        <h1>Have-Watched List</h1>
       </div>
       <div data-role="content">
         <p>This is a have-watched list</p>
-      </div>
-    </div>
-
-    <!--Menu Page-->
-    <div data-role="page" id="pageMenu">
-      <div data-role="header">
-        <a href="#pageMenu" data-role="button" data-icon="bars" data-iconpos="left" data-inline="true">Menu</a>
-        <h1>MovieMates</h1>
-      </div>
-
-      <div data-role="content">
-        <div data-role="controlgroup">
-          <a href="#homePage" data-role="button">Home Page</a>
-          <a href="#watchList" data-role="button">Watch List</a>
-          <a href="#alreadyWatched" data-role="button">Have-Watched List</a>
-        </div>
       </div>
     </div>
 
