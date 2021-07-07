@@ -40,6 +40,7 @@
       </div><!-- /header -->
       <div data-role="content">
         <p>Helllllllllllllo there</p>
+        <p><a href="<?= $login_url ?>">Login with Google</a></p>
       </div>
     </div>
 
