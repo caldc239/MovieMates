@@ -16,6 +16,7 @@ if(isset($_GET['code'])) {
 
 		// Get user information
 		$user_info = GetUserProfileInfo($access_token);
+		echo ($user_info);
 	}
 	catch(Exception $e) {
 		echo $e->getMessage();
