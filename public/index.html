@@ -4,7 +4,7 @@
   <head>
     <!-- Created by Cassaundra Caldwell
       Date Created: 29 June 2021
-      Date Modified: 2 July 2021
+      Date Modified: 8 July 2021
       Description: MovieMates is a web app designed to track movies and TV shows
       a user wants to watch or has watched, provide basic info about them, and
       provide users with the ability to share their lists with friends. -->
@@ -19,15 +19,6 @@
     <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 
-    <!-- PHP -->
-    <?php
-
-    require_once('settings.php');
-
-    $login_url = 'https://accounts.google.com/o/oauth2/v2/auth?scope=' . urlencode('https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email') . '&redirect_uri=' . urlencode(CLIENT_REDIRECT_URL) . '&response_type=code&client_id=' . CLIENT_ID . '&access_type=online';
-
-?>
-
   </head>
 
   <body>
@@ -40,7 +31,6 @@
       </div><!-- /header -->
       <div data-role="content">
         <p>Helllllllllllllo there</p>
-        <p><a href="<?= $login_url ?>">Login with Google</a></p>
       </div>
     </div>
 
@@ -63,6 +53,16 @@
         <p>This is a have-watched list</p>
       </div>
     </div>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="/__/firebase/8.7.0/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+         https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="/__/firebase/8.7.0/firebase-analytics.js"></script>
+
+    <!-- Initialize Firebase -->
+    <script src="/__/firebase/init.js"></script>
 
   </body>
 
