@@ -4,7 +4,7 @@
   <head>
     <!-- Created by Cassaundra Caldwell
       Date Created: 29 June 2021
-      Date Modified: 8 July 2021
+      Date Modified: 11 July 2021
       Description: MovieMates is a web app designed to track movies and TV shows
       a user wants to watch or has watched, provide basic info about them, and
       provide users with the ability to share their lists with friends. -->
@@ -14,6 +14,7 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+    <link rel="stylesheet" href="/styles/moviemates.css" />
 
     <!-- JS -->
     <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -23,8 +24,31 @@
 
   <body>
 
-    <!-- Home page -->
-    <div data-role="page" id="homePage">
+    <!-- Home not logged in page -->
+    <div data-role="page" id="homePageNotLogin">
+      <!-- header -->
+      <div data-role="header">
+        <h1>Home Page</h1>
+        <!-- nav bar -->
+        <div data-role="navbar">
+          <ul>
+            <li><a href="#homePageNotLogin" class="ui-btn-active">Home</a></li>
+            <li><a href="#watchList">Watch List</a></li>
+            <li><a href="#alreadyWatched">Have-Watched List</a></li>
+          </ul>
+        </div>
+        <!-- /navbar -->
+      </div><!-- /header -->
+      <div data-role="content" id="homeLogin">
+        <center>
+          <h3>Already a member? <a href="#loginPage">Login</a></h3>
+          <h3>Need an account? <a href="#signupPage">Sign Up</a></h3>
+        </center>
+      </div>
+    </div>
+
+    <!-- Home logged in page -->
+    <div data-role="page" id="homePageLogin">
       <!-- header -->
       <div data-role="header">
         <h1>Home Page</h1>
@@ -38,8 +62,11 @@
         </div>
         <!-- /navbar -->
       </div><!-- /header -->
-      <div data-role="content">
-        <p>Helllllllllllllo there</p>
+      <div data-role="content" id="homeLogin">
+        <h2>To Watch</h2>
+        <p>Watch list</p>
+        <h2>Already Watched</h2>
+        <p>Watched List</p>
       </div>
     </div>
 
@@ -80,6 +107,50 @@
         <p>This is a have-watched list</p>
       </div>
     </div>
+
+    <!-- Login Page -->
+    <div data-role="page" id="loginPage">
+      <center>
+        <header>
+          <h1>MovieMates</h1>
+          <h4><a href="#homePageNotLogin">Return Home</a></h4>
+        </header>
+        <h2>Login</h2>
+      </center>
+      <form>
+        <div class="container">
+          <label>Username: </label>
+          <input type="text" placeholder="Enter Username" name="username" required>
+          <label>Password: </label>
+          <input type="password" placeholder="Enter Password" name="password" required>
+          <button type="submit">Login</button>
+          <button type="button" class="cancelbtn">Cancel</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Signup Page -->
+    <div data-role="page" id="signupPage">
+      <center>
+        <header>
+          <h1>MovieMates</h1>
+          <h4><a href="#homePageNotLogin">Return Home</a></h4>
+        </header>
+        <h2>Sign Up</h2>
+      </center>
+      <form>
+        <div class="container">
+          <label>Email Address: </label>
+          <input type="email" placeholder="Enter Email Address" name="email" required>
+          <label>Password: </label>
+          <input type="password" placeholder="Enter Password" name="password" required>
+          <button type="submit">Sign Up</button>
+          <button type="button" class="cancelbtn">Cancel</button>
+        </div>
+      </form>
+    </div>
+
+
 
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="/__/firebase/8.7.0/firebase-app.js"></script>
