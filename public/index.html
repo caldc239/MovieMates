@@ -58,6 +58,7 @@
             <li><a href="#homePage" class="ui-btn-active">Home</a></li>
             <li><a href="#watchList">Watch List</a></li>
             <li><a href="#alreadyWatched">Have-Watched List</a></li>
+            <li><a id="logout">Logout</a></li>
           </ul>
         </div>
         <!-- /navbar -->
@@ -117,7 +118,7 @@
         </header>
         <h2>Login</h2>
       </center>
-      <form>
+      <form id="loginForm">
         <div class="container">
           <label>Username: </label>
           <input type="text" placeholder="Enter Username" name="username" required>
@@ -138,29 +139,41 @@
         </header>
         <h2>Sign Up</h2>
       </center>
-      <form>
+      <form id="signupForm">
         <div class="container">
           <label>Email Address: </label>
-          <input type="email" placeholder="Enter Email Address" name="email" required>
+          <input type="email" placeholder="Enter Email Address" name="email" id="signupEmail" required>
           <label>Password: </label>
-          <input type="password" placeholder="Enter Password" name="password" required>
+          <input type="password" placeholder="Choose Password" name="password" id="signupPassword" required>
           <button type="submit">Sign Up</button>
           <button type="button" class="cancelbtn">Cancel</button>
         </div>
       </form>
     </div>
 
-
-
     <!-- The core Firebase JS SDK is always required and must be listed first -->
-    <script src="/__/firebase/8.7.0/firebase-app.js"></script>
+    <script src="/__/firebase/8.7.1/firebase-app.js"></script>
 
-    <!-- TODO: Add SDKs for Firebase products that you want to use
-         https://firebase.google.com/docs/web/setup#available-libraries -->
-    <script src="/__/firebase/8.7.0/firebase-analytics.js"></script>
+    <!-- SDK's for Firebase products -->
+    <script src="/__/firebase/8.7.1/firebase-analytics.js"></script>
+    <script src="/__/firebase/8.7.1/firebase-auth.js"></script>
+    <script src="/__/firebase/8.7.1/firebase-firestore.js"></script>
 
     <!-- Initialize Firebase -->
     <script src="/__/firebase/init.js"></script>
+
+    <!-- Auth & Firestore references -->
+    <script>
+      const auth = firebase.auth();
+      const db = firebase.firestore();
+
+      db.settings({
+        timestampsInSnapshots: true
+      });
+    </script>
+
+    <!-- Custom JS files -->
+    <script src="/scripts/auth.js"></script>
 
   </body>
 
