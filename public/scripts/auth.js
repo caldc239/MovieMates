@@ -18,14 +18,13 @@ signupForm.submit((e) => {
 
 });
 
-// Logout
-const logout = $('#logout');
-logout.click((e) => {
+// Logout test
+$(document).on('click', '#logout, #logoutWatch, #logoutWatched', ((e) => {
 	e.preventDefault();
 	auth.signOut().then(() => {
 		console.log('user signed out');
 	});
-});
+}));
 
 // Login
 const loginForm = $('#loginForm');
