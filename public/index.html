@@ -29,15 +29,6 @@
       <!-- header -->
       <div data-role="header">
         <h1>Home Page</h1>
-        <!-- nav bar -->
-        <div data-role="navbar">
-          <ul>
-            <li><a href="#homePageNotLogin" class="ui-btn-active">Home</a></li>
-            <li><a href="#watchList">Watch List</a></li>
-            <li><a href="#alreadyWatched">Have-Watched List</a></li>
-          </ul>
-        </div>
-        <!-- /navbar -->
       </div><!-- /header -->
       <div data-role="content" id="homeLogin">
         <center>
@@ -45,89 +36,6 @@
           <h3>Need an account? <a href="#signupPage">Sign Up</a></h3>
         </center>
       </div>
-    </div>
-
-    <!-- Home logged in page -->
-    <div data-role="page" id="homePageLogin">
-      <!-- header -->
-      <div data-role="header">
-        <h1>Home Page</h1>
-        <!-- nav bar -->
-        <div data-role="navbar">
-          <ul>
-            <li><a href="#homePage" class="ui-btn-active">Home</a></li>
-            <li><a href="#watchList">Watch List</a></li>
-            <li><a href="#alreadyWatched">Have-Watched List</a></li>
-            <li><a id="logout">Logout</a></li>
-          </ul>
-        </div>
-        <!-- /navbar -->
-      </div><!-- /header -->
-      <div data-role="content" id="homeLogin">
-        <h2>To Watch</h2>
-        <p>Watch list</p>
-        <h2>Already Watched</h2>
-        <p>Watched List</p>
-      </div>
-    </div>
-
-    <!-- Watch List -->
-    <div data-role="page" id="watchList">
-      <div data-role="header">
-        <h1>Watch List</h1>
-        <!-- nav bar -->
-        <div data-role="navbar">
-          <ul>
-            <li><a href="#homePage">Home</a></li>
-            <li><a href="#watchList" class="ui-btn-active">Watch List</a></li>
-            <li><a href="#alreadyWatched">Have-Watched List</a></li>
-          </ul>
-        </div>
-        <!-- /navbar -->
-      </div>
-      <div data-role="content">
-        <p>This is a watch list</p>
-      </div>
-    </div>
-
-    <!-- Have-Watched List -->
-    <div data-role="page" id="alreadyWatched">
-      <div data-role="header">
-        <h1>Have-Watched List</h1>
-        <!-- nav bar -->
-        <div data-role="navbar">
-          <ul>
-            <li><a href="#homePage">Home</a></li>
-            <li><a href="#watchList">Watch List</a></li>
-            <li><a href="#alreadyWatched" class="ui-btn-active">Have-Watched List</a></li>
-          </ul>
-        </div>
-        <!-- /navbar -->
-      </div>
-      <div data-role="content">
-        <p>This is a have-watched list</p>
-      </div>
-    </div>
-
-    <!-- Login Page -->
-    <div data-role="page" id="loginPage">
-      <center>
-        <header>
-          <h1>MovieMates</h1>
-          <h4><a href="#homePageNotLogin">Return Home</a></h4>
-        </header>
-        <h2>Login</h2>
-      </center>
-      <form id="loginForm">
-        <div class="container">
-          <label>Username: </label>
-          <input type="text" placeholder="Enter Username" name="username" required>
-          <label>Password: </label>
-          <input type="password" placeholder="Enter Password" name="password" required>
-          <button type="submit">Login</button>
-          <button type="button" class="cancelbtn">Cancel</button>
-        </div>
-      </form>
     </div>
 
     <!-- Signup Page -->
@@ -150,6 +58,93 @@
         </div>
       </form>
     </div>
+
+    <!-- Login Page -->
+    <div data-role="page" id="loginPage">
+      <center>
+        <header>
+          <h1>MovieMates</h1>
+          <h4><a href="#homePageNotLogin">Return Home</a></h4>
+        </header>
+        <h2>Login</h2>
+      </center>
+      <form id="loginForm">
+        <div class="container">
+          <label>Username: </label>
+          <input type="text" placeholder="Enter Username" name="username" id="loginEmail" required>
+          <label>Password: </label>
+          <input type="password" placeholder="Enter Password" name="password" id="loginPassword" required>
+          <button type="submit">Login</button>
+          <button type="button" class="cancelbtn">Cancel</button>
+        </div>
+      </form>
+    </div>
+
+
+    <!-- Home logged in page -->
+    <div data-role="page" id="homePageLogin">
+      <!-- header -->
+      <div data-role="header">
+        <h1>Home Page</h1>
+        <!-- nav bar -->
+        <div data-role="navbar">
+          <ul>
+            <li><a href="#homePageLogin" class="ui-btn-active">Home</a></li>
+            <li><a href="#watchList">Watch List</a></li>
+            <li><a href="#alreadyWatched">Have-Watched List</a></li>
+            <li><a id="logout">Logout</a></li>
+          </ul>
+        </div>
+        <!-- /navbar -->
+      </div><!-- /header -->
+      <div data-role="content" id="homeLogin">
+        <h2>To Watch</h2>
+        <p>Watch list</p>
+        <h2>Already Watched</h2>
+        <p>Watched List</p>
+      </div>
+    </div>
+
+    <!-- Watch List -->
+    <div data-role="page" id="watchList">
+      <div data-role="header">
+        <h1>Watch List</h1>
+        <!-- nav bar -->
+        <div data-role="navbar">
+          <ul>
+            <li><a href="#homePageLogin">Home</a></li>
+            <li><a href="#watchList" class="ui-btn-active">Watch List</a></li>
+            <li><a href="#alreadyWatched">Have-Watched List</a></li>
+            <li><a id="logout">Logout</a></li>
+          </ul>
+        </div>
+        <!-- /navbar -->
+      </div>
+      <div data-role="content">
+        <p>This is a watch list</p>
+      </div>
+    </div>
+
+    <!-- Have-Watched List -->
+    <div data-role="page" id="alreadyWatched">
+      <div data-role="header">
+        <h1>Have-Watched List</h1>
+        <!-- nav bar -->
+        <div data-role="navbar">
+          <ul>
+            <li><a href="#homePageLogin">Home</a></li>
+            <li><a href="#watchList">Watch List</a></li>
+            <li><a href="#alreadyWatched" class="ui-btn-active">Have-Watched List</a></li>
+            <li><a id="logout">Logout</a></li>
+          </ul>
+        </div>
+        <!-- /navbar -->
+      </div>
+      <div data-role="content">
+        <p>This is a have-watched list</p>
+      </div>
+    </div>
+
 
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="/__/firebase/8.7.1/firebase-app.js"></script>
