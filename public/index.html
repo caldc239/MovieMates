@@ -29,9 +29,11 @@
       <!-- header -->
       <div data-role="header">
         <h1>Home Page</h1>
-      </div><!-- /header -->
+      </div>
+      <!-- /header -->
       <div data-role="content" id="homeLogin">
         <center>
+          <img src="/images/moviemates_logo_people.svg" alt="MovieMates logo" </img>
           <h3>Already a member? <a href="#loginPage">Login</a></h3>
           <h3>Need an account? <a href="#signupPage">Sign Up</a></h3>
         </center>
@@ -40,29 +42,32 @@
 
     <!-- Signup Page -->
     <div data-role="page" id="signupPage">
-      <center>
-        <header>
-          <h1>MovieMates</h1>
-          <h4><a href="#homePageNotLogin">Return Home</a></h4>
-        </header>
-        <h2>Sign Up</h2>
-      </center>
-      <!-- Sign up email -->
-      <form id="signupForm">
-        <div class="container">
-          <label>Email Address: </label>
-          <input type="email" placeholder="Enter Email Address" name="email" id="signupEmail" required>
-          <label>Password: </label>
-          <input type="password" placeholder="Choose Password" name="password" id="signupPassword" required>
-          <button type="submit">Sign Up</button>
-          <button type="button" class="cancelbtn">Cancel</button>
-        </div>
-      </form>
-      <!-- Sign up Google -->
-      <div class="container" id="signupGoogle">
+      <div data-role="content">
         <center>
-          <a>Sign up with Google</a>
+          <div class="logo">
+            <img src="/images/moviemates_logo_people.svg" alt="MovieMates logo">
+          </div>
+          <h4><a href="#homePageNotLogin">Return Home</a></h4>
+          <h2>Sign Up</h2>
         </center>
+
+        <!-- Sign up email -->
+        <form id="signupForm">
+          <div class="container">
+            <label>Email Address: </label>
+            <input type="email" placeholder="Enter Email Address" name="email" id="signupEmail" required>
+            <label>Password: </label>
+            <input type="password" placeholder="Choose Password" name="password" id="signupPassword" required>
+            <button type="submit">Sign Up</button>
+            <button type="button" class="cancelbtn">Cancel</button>
+          </div>
+        </form>
+        <!-- Sign up Google -->
+        <div class="container" id="signupGoogle">
+          <center>
+            <a>Sign up with Google</a>
+          </center>
+        </div>
       </div>
     </div>
 
@@ -111,6 +116,11 @@
         <!-- /navbar -->
       </div><!-- /header -->
       <div data-role="content">
+        <center>
+          <div class="logo">
+            <img src="/images/moviemates_logo_people.svg" alt="MovieMates logo">
+          </div>
+        </center>
         <h2>To Watch</h2>
         <p>Watch list</p>
         <h2>Already Watched</h2>
@@ -133,9 +143,14 @@
         </div>
         <!-- /navbar -->
       </div>
-      <div data-role="content">
-        <p>This is a watch list</p>
-      </div>
+      <center>
+        <div data-role="content">
+          <div class="logo">
+            <img src="/images/moviemates_logo_people.svg" alt="MovieMates logo">
+          </div>
+      </center>
+      <p>This is a watch list</p>
+    </div>
     </div>
 
     <!-- Have-Watched List -->
@@ -153,7 +168,13 @@
         </div>
         <!-- /navbar -->
       </div>
+
       <div data-role="content">
+        <center>
+          <div class="logo">
+            <img src="/images/moviemates_logo_people.svg" alt="MovieMates logo">
+          </div>
+        </center>
         <p>This is a have-watched list</p>
       </div>
     </div>
