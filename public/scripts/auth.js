@@ -1,4 +1,4 @@
-// Signup
+// Signup with email
 const signupForm = $('#signupForm');
 signupForm.submit((e) => {
 	e.preventDefault();
@@ -15,8 +15,16 @@ signupForm.submit((e) => {
 	// Clear form & redirect user to logged-in homepage
 	$('#signupForm').trigger("reset");
 	$(':mobile-pagecontainer').pagecontainer('change', '#homePageLogin');
-
 });
+
+// Signup/SignIn
+const GoogleAuth = new firebase.auth.GoogleAuthProvider();
+$(document).on('click', '#signupGoogle, #signinGoogle', ((e) => {
+	e.preventDefault();
+	firebase.auth().signInWithPopup(GoogleAuth).then(() => {
+		$(':mobile-pagecontainer').pagecontainer('change', '#homePageLogin');
+	});
+}));
 
 // Logout
 $(document).on('click', '#logout, #logoutWatch, #logoutWatched', ((e) => {
