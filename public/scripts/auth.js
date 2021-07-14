@@ -18,12 +18,14 @@ signupForm.submit((e) => {
 
 });
 
-// Logout test
+// Logout
 $(document).on('click', '#logout, #logoutWatch, #logoutWatched', ((e) => {
 	e.preventDefault();
 	auth.signOut().then(() => {
 		console.log('user signed out');
 	});
+
+	$(':mobile-pagecontainer').pagecontainer('change', '#homePageNotLogin');
 }));
 
 // Login
