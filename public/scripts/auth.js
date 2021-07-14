@@ -25,8 +25,6 @@ logout.click((e) => {
 	auth.signOut().then(() => {
 		console.log('user signed out');
 	});
-	// Redirect user to not-logged-in homepage 
-	$(':mobile-pagecontainer').pagecontainer('change', '#homePageNotLogin');
 });
 
 // Login
