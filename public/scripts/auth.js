@@ -17,7 +17,7 @@ signupForm.submit((e) => {
 	$(':mobile-pagecontainer').pagecontainer('change', '#homePageLogin');
 });
 
-// Signup/SignIn
+// Google Signup/SignIn
 const GoogleAuth = new firebase.auth.GoogleAuthProvider();
 $(document).on('click', '#signupGoogle, #signinGoogle', ((e) => {
 	e.preventDefault();
