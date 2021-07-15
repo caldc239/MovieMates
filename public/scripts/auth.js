@@ -36,7 +36,7 @@ $(document).on('click', '#logout, #logoutWatch, #logoutWatched', ((e) => {
 	$(':mobile-pagecontainer').pagecontainer('change', '#homePageNotLogin');
 }));
 
-// Login
+// Login with email
 const loginForm = $('#loginForm');
 loginForm.submit((e) => {
 	e.preventDefault();
