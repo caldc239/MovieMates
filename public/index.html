@@ -46,17 +46,18 @@
           </div>
           <h4><a href="#homePageNotLogin">Return Home</a></h4>
           <h2>Sign Up</h2>
+          <button id="openForm" onClick="openForm()">Sign up with email</button>
         </center>
 
         <!-- Sign up email -->
-        <form id="signupForm">
-          <div class="container">
+        <form id="formSignup">
+          <div class="container" id="signupForm">
             <label>Email Address: </label>
             <input type="email" placeholder="Enter Email Address" name="email" id="signupEmail" required>
             <label>Password: </label>
             <input type="password" placeholder="Choose Password" name="password" id="signupPassword" required>
             <button type="submit">Sign Up</button>
-            <button type="button" class="cancelbtn">Cancel</button>
+            <button type="button" class="cancelbtn" onClick="closeForm()">Cancel</button>
           </div>
         </form>
         <!-- Sign up Google -->
@@ -68,7 +69,7 @@
       </div>
     </div>
 
-    <!-- Login Page -->
+    <!-- Sign in Page -->
     <div data-role="page" id="loginPage">
       <center>
         <div class="logo">
@@ -78,7 +79,7 @@
         <h2>Login</h2>
       </center>
 
-      <!-- Login email -->
+      <!-- Sign in email -->
       <form id="loginForm">
         <div class="container">
           <label>Username: </label>
@@ -90,7 +91,7 @@
         </div>
       </form>
 
-      <!-- Login Google -->
+      <!-- Sign in Google -->
       <div class="container" id="signinGoogle">
         <center>
           <img src="/images/btn_google_signin_light_focus_web.png" id="googleSignInButton" alt="Sign in with Google">

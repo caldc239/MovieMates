@@ -54,3 +54,12 @@ loginForm.submit((e) => {
 	$('#loginForm').trigger("reset");
 	$(':mobile-pagecontainer').pagecontainer('change', '#homePageLogin');
 })
+
+// Popup and close email form
+function openForm() {
+	$('#signupForm').show();
+}
+
+function closeForm() {
+	$('#signupForm').hide();
+}
