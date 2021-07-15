@@ -26,14 +26,11 @@
 
     <!-- Home not logged in page -->
     <div data-role="page" id="homePageNotLogin">
-      <!-- header -->
-      <div data-role="header">
-        <h1>Home Page</h1>
-      </div>
-      <!-- /header -->
       <div data-role="content" id="homeLogin">
         <center>
-          <img src="/images/moviemates_logo_people.svg" alt="MovieMates logo" </img>
+          <div class="logo">
+            <img src="/images/moviemates_logo_people.svg" alt="MovieMates logo">
+          </div>
           <h3>Already a member? <a href="#loginPage">Login</a></h3>
           <h3>Need an account? <a href="#signupPage">Sign Up</a></h3>
         </center>
@@ -74,12 +71,14 @@
     <!-- Login Page -->
     <div data-role="page" id="loginPage">
       <center>
-        <header>
-          <h1>MovieMates</h1>
-          <h4><a href="#homePageNotLogin">Return Home</a></h4>
-        </header>
+        <div class="logo">
+          <img src="/images/moviemates_logo_people.svg" alt="MovieMates logo">
+        </div>
+        <h4><a href="#homePageNotLogin">Return Home</a></h4>
         <h2>Login</h2>
       </center>
+
+      <!-- Login email -->
       <form id="loginForm">
         <div class="container">
           <label>Username: </label>
@@ -90,7 +89,8 @@
           <button type="button" class="cancelbtn">Cancel</button>
         </div>
       </form>
-      <!-- Sign in Google -->
+
+      <!-- Login Google -->
       <div class="container" id="signinGoogle">
         <center>
           <a>Sign in with Google</a>
@@ -103,7 +103,6 @@
     <div data-role="page" id="homePageLogin">
       <!-- header -->
       <div data-role="header">
-        <h1>Home Page</h1>
         <!-- nav bar -->
         <div data-role="navbar">
           <ul>
@@ -131,7 +130,6 @@
     <!-- Watch List -->
     <div data-role="page" id="watchList">
       <div data-role="header">
-        <h1>Watch List</h1>
         <!-- nav bar -->
         <div data-role="navbar">
           <ul>
@@ -156,7 +154,6 @@
     <!-- Have-Watched List -->
     <div data-role="page" id="alreadyWatched">
       <div data-role="header">
-        <h1>Have-Watched List</h1>
         <!-- nav bar -->
         <div data-role="navbar">
           <ul>

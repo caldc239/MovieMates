@@ -8,9 +8,14 @@
   margin-right: 10%;
 }
 
-#signupPage .logo {
-  padding-top: 30%;
-  padding-left: 30%;
-  padding-right: 30%;
-  padding-bottom: 30%;
+.logo {
+  margin-top: 150px;
+  margin-bottom: 35px;
+}
+
+#homePageLogin * .logo,
+#watchList * .logo,
+#alreadyWatched * .logo {
+  margin-top: 40px;
+  margin-bottom: 35px;
 }
