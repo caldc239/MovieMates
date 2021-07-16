@@ -57,9 +57,9 @@ loginForm.submit((e) => {
 
 // Popup and close email form
 function openForm() {
-	$('#signupForm').show();
+	$('#signupForm, #loginForm').show();
 }
 
 function closeForm() {
-	$('#signupForm').hide();
+	$('#signupForm, #loginForm').hide();
 }
