@@ -1,3 +1,12 @@
+// authentication status listener
+auth.onAuthStateChanged(user => {
+	if (user) {
+		console.log('user logged in: ', user);
+	} else {
+		console.log('user logged out');
+	}
+});
+
 // Signup with email
 const signupForm = $('#signupForm');
 signupForm.submit((e) => {
