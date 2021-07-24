@@ -4,7 +4,7 @@
   <head>
     <!-- Created by Cassaundra Caldwell
       Date Created: 29 June 2021
-      Date Modified: 16 July 2021
+      Date Modified: 20 July 2021
       Description: MovieMates is a web app designed to track movies and TV shows
       a user wants to watch or has watched, provide basic info about them, and
       provide users with the ability to share their lists with friends. -->
@@ -123,8 +123,19 @@
           </div>
         </center>
         <h2>Watch List</h2>
-        <div id="dataEntry" <label for="addToList">Enter the movie you would like to add: </label>
+        <div id="dataEntry" <label for="addToList">Enter the movie you would like to watch: </label>
           <input id="addToList" placeholder="Movie or TV show title">
+          <button type="submit" id="search">Search</button>
+        </div>
+        <div id="searchResponse">
+          <!--<ul class="searchList">
+            <li><label class="checkbox-inline">
+                <input type="checkbox" value="">The Mummy
+              </label></li>
+            <li><label class="checkbox-inline">
+                <input type="checkbox" value="">Jurassic Park
+              </label></li>
+          </ul>-->
         </div>
       </div>
     </div>
@@ -202,6 +213,7 @@
 
     <!-- Custom JS files -->
     <script src="/scripts/auth.js"></script>
+    <script src="/scripts/movies.js"></script>
 
   </body>
 

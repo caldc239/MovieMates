@@ -30,3 +30,7 @@
   margin: auto;
   width: 80%
 }
+
+ul.searchList {
+  list-style-type: none;
+}
