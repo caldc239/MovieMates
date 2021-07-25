@@ -2,8 +2,10 @@
 auth.onAuthStateChanged(user => {
 	if (user) {
 		console.log('user logged in: ', user);
+		$(':mobile-pagecontainer').pagecontainer('change', '#homePageLogin');
 	} else {
 		console.log('user logged out');
+		$(':mobile-pagecontainer').pagecontainer('change', '#homePageNotLogin');
 	}
 });
 
@@ -17,22 +19,23 @@ signupForm.submit((e) => {
 	const password = $('#signupPassword').val();
 
 	// Sign up the user
-	auth.createUserWithEmailAndPassword(email, password).then(cred => {
-		console.log(cred.user)
+	auth.createUserWithEmailAndPassword(email, password).then((cred) => {
+		console.log('bacon');
+		console.log(cred.user);
+		// Clear form & redirect user to logged-in homepage
+		$('#signupForm').trigger("reset");
+		//$(':mobile-pagecontainer').pagecontainer('change', '#homePageLogin');
+	}).catch((err) => {
+		console.log('beep');
+		$('#signupForm .error').html(err.message);
 	});
-
-	// Clear form & redirect user to logged-in homepage
-	$('#signupForm').trigger("reset");
-	$(':mobile-pagecontainer').pagecontainer('change', '#homePageLogin');
 });
 
 // Google Signup/SignIn
 const GoogleAuth = new firebase.auth.GoogleAuthProvider();
 $(document).on('click', '#signupGoogle, #signinGoogle', ((e) => {
 	e.preventDefault();
-	firebase.auth().signInWithPopup(GoogleAuth).then(() => {
-		$(':mobile-pagecontainer').pagecontainer('change', '#homePageLogin');
-	});
+	firebase.auth().signInWithPopup(GoogleAuth).then(() => {});
 }));
 
 // Logout
@@ -42,7 +45,7 @@ $(document).on('click', '#logout, #logoutWatch, #logoutWatched', ((e) => {
 		console.log('user signed out');
 	});
 
-	$(':mobile-pagecontainer').pagecontainer('change', '#homePageNotLogin');
+	//$(':mobile-pagecontainer').pagecontainer('change', '#homePageNotLogin');
 }));
 
 // Login with email
@@ -61,7 +64,7 @@ loginForm.submit((e) => {
 
 	// Clear form & redirect user to logged-in homepage
 	$('#loginForm').trigger("reset");
-	$(':mobile-pagecontainer').pagecontainer('change', '#homePageLogin');
+	//$(':mobile-pagecontainer').pagecontainer('change', '#homePageLogin');
 })
 
 // Popup and close email form

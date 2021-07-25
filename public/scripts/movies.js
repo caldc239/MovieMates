@@ -54,10 +54,23 @@ function updateList(response) {
 	$('.searchList * :button').on('click', ((e) => {
 		e.preventDefault();
 		console.log(e);
+		//variable to hold extracted movie.imdbID
+		var movieID = e.target.id.substring(7);
+		console.log(movieID);
+		// iterate through search responses to find matching imdbID
+		for (var i = 0; i < searchResults.Search.length; i++) {
+			if (searchResults.Search[i].imdbID == movieID) {
+				db.collection('movies').doc(movieID).set(searchResults.Search[i]);
+				// check if user id exists in db.collection, if not add them and set blank field?
+				// check if movieID exists in user's watch list collection
+				// if it doesnt exist, add movieID to user's watch list collection
+				// call updateWatchList() to display the user's list
+			}
+		}
 	}));
 }
 
-function addToWatchList() {
+/*function updateWatchList() {
 	//append to html in Watch List with label checkbox-inline
 	var html = '';
 	html += '<div><h2>Watch List</h2></div>';
@@ -70,7 +83,7 @@ function addToWatchList() {
 
 }));
 //clear searchResponse list (and search bar?)
-}
+}*/
 
 function moveToWatchedList() {
 	//listen for user to click or check desired movie
