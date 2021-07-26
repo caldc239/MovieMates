@@ -20,13 +20,10 @@ signupForm.submit((e) => {
 
 	// Sign up the user
 	auth.createUserWithEmailAndPassword(email, password).then((cred) => {
-		console.log('bacon');
 		console.log(cred.user);
-		// Clear form & redirect user to logged-in homepage
+		// Clear form
 		$('#signupForm').trigger("reset");
-		//$(':mobile-pagecontainer').pagecontainer('change', '#homePageLogin');
 	}).catch((err) => {
-		console.log('beep');
 		$('#signupForm .error').html(err.message);
 	});
 });
@@ -44,8 +41,6 @@ $(document).on('click', '#logout, #logoutWatch, #logoutWatched', ((e) => {
 	auth.signOut().then(() => {
 		console.log('user signed out');
 	});
-
-	//$(':mobile-pagecontainer').pagecontainer('change', '#homePageNotLogin');
 }));
 
 // Login with email
@@ -58,14 +53,14 @@ loginForm.submit((e) => {
 	const password = $('#loginPassword').val();
 
 	// Login the user
-	auth.signInWithEmailAndPassword(email, password).then(cred => {
-		console.log(cred.user)
+	auth.signInWithEmailAndPassword(email, password).then((cred) => {
+		console.log(cred.user);
+		// Clear form
+		$('#loginForm').trigger("reset");
+	}).catch((err) => {
+		$('#loginForm .error').html(err.message);
 	});
-
-	// Clear form & redirect user to logged-in homepage
-	$('#loginForm').trigger("reset");
-	//$(':mobile-pagecontainer').pagecontainer('change', '#homePageLogin');
-})
+});
 
 // Popup and close email form
 function openForm() {
