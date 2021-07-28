@@ -68,5 +68,9 @@ function openForm() {
 }
 
 function closeForm() {
+	$(document).on('click', '.cancelbtn', ((e) => {
+		console.log('hi');
+		$('#signupForm, #loginForm').trigger("reset");
+	}));
 	$('#signupForm, #loginForm').hide();
 }
