@@ -62,6 +62,16 @@ function updateList(response) {
 			if (searchResults.Search[i].imdbID == movieID) {
 				db.collection('movies').doc(movieID).set(searchResults.Search[i]);
 				// check if user id exists in db.collection, if not add them and set blank field?
+				const usersRef = db.collection('users').doc(auth.currentUser.uid);
+				const doc = usersRef.get().then((doc) => {
+					if (!doc.exists) {
+						db.collection('users').doc(auth.currentUser.uid).set({
+							watchList: ''
+						});
+					} else {
+						console.log('hi');
+					}
+				});
 				// check if movieID exists in user's watch list collection
 				// if it doesnt exist, add movieID to user's watch list collection
 				// call updateWatchList() to display the user's list
@@ -89,4 +99,10 @@ function moveToWatchedList() {
 	//listen for user to click or check desired movie
 	//append to html in Watched List
 	//remove movie from Watch List
+}
+
+function testUser() {
+	db.collection('users').doc(auth.currentUser.uid).set({
+		watchList: ''
+	});
 }
