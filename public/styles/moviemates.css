@@ -31,6 +31,6 @@
   width: 80%
 }
 
-ul.searchList {
+ul.searchList, ul.addedWatchList {
   list-style-type: none;
 }

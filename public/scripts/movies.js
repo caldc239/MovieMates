@@ -1,6 +1,7 @@
 //global function to hold API search request
 var searchResults;
 var selectedID;
+var titleForList;
 
 //pass user input to function movieSearch to return movie options
 function movieSearch(title, callback) {
@@ -83,20 +84,31 @@ function updateList(response) {
 }
 
 function updateWatchList() {
-	var moviesRef = db.collection('movies').doc(selectedID);
-	var usersMovieRef = db.collection('users').doc(auth.currentUser.uid).collection('movieList').doc(selectedID);
-	console.log(usersMovieRef);
-	// if selected ID in the user's movielist matches an ID in the movies collection:
-	// extract title field from movies collection
+	var documentReference = db.collection('movies').doc(selectedID);
+	//var usersMovieRef = db.collection('users').doc(auth.currentUser.uid).collection('movieList').doc(selectedID);
+	//console.log(selectedID);
+	documentReference.get().then(function(documentSnapshot) {
+		if (documentSnapshot.exists) {
+			var data = documentSnapshot.data();
+			titleForList = data.Title;
+			console.log(titleForList);
+		} else {
+			console.log('document not found');
+		}
+	});
+}
+
+function appendToWatch() {
 	// append to html in Watch List with label checkbox-inline
 	var html = '';
 	html += '<div><h2>Watch List</h2></div>';
 	html += '<ul class="addedWatchList">';
-	html += '<li><label class="checkbox-inline">'
-	html += '<input type = "checkbox" value = "" >'
-	html +=
-		html += '</label></li>'
+	html += '<li><label class="checkbox-inline">';
+	html += '<input type = "checkbox" value =""> ';
+	html += titleForList;
+	html += '</label></li>';
 	html += '</ul>';
+	$('#watchListContent').html(html);
 	//clear searchResponse list (and search bar?)
 }
 
@@ -104,10 +116,4 @@ function moveToWatchedList() {
 	//listen for user to click or check desired movie
 	//append to html in Watched List
 	//remove movie from Watch List
-}
-
-function testUser() {
-	db.collection('users').doc(auth.currentUser.uid).set({
-		watchList: ''
-	});
 }
