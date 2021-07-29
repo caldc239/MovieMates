@@ -1,5 +1,6 @@
 //global function to hold API search request
 var searchResults;
+var selectedID;
 
 //pass user input to function movieSearch to return movie options
 function movieSearch(title, callback) {
@@ -56,32 +57,38 @@ function updateList(response) {
 		console.log(e);
 		//variable to hold extracted movie.imdbID
 		var movieID = e.target.id.substring(7);
+		selectedID = movieID;
 		console.log(movieID);
 		// iterate through search responses to find matching imdbID
 		for (var i = 0; i < searchResults.Search.length; i++) {
 			if (searchResults.Search[i].imdbID == movieID) {
 				db.collection('movies').doc(movieID).set(searchResults.Search[i]);
 				// check if user id exists in db.collection, if not add them and set blank field?
+				// add movieID to user's watch list collection
 				const usersRef = db.collection('users').doc(auth.currentUser.uid);
 				const doc = usersRef.get().then((doc) => {
 					if (!doc.exists) {
-						db.collection('users').doc(auth.currentUser.uid).set({
-							watchList: ''
+						db.collection('users').doc(auth.currentUser.uid).collection('movieList').doc(movieID).set({
+							movie: movieID
 						});
 					} else {
 						console.log('hi');
 					}
 				});
-				// check if movieID exists in user's watch list collection
-				// if it doesnt exist, add movieID to user's watch list collection
 				// call updateWatchList() to display the user's list
+				updateWatchList();
 			}
 		}
 	}));
 }
 
-/*function updateWatchList() {
-	//append to html in Watch List with label checkbox-inline
+function updateWatchList() {
+	var moviesRef = db.collection('movies').doc(selectedID);
+	var usersMovieRef = db.collection('users').doc(auth.currentUser.uid).collection('movieList').doc(selectedID);
+	console.log(usersMovieRef);
+	// if selected ID in the user's movielist matches an ID in the movies collection:
+	// extract title field from movies collection
+	// append to html in Watch List with label checkbox-inline
 	var html = '';
 	html += '<div><h2>Watch List</h2></div>';
 	html += '<ul class="addedWatchList">';
@@ -90,10 +97,8 @@ function updateList(response) {
 	html +=
 		html += '</label></li>'
 	html += '</ul>';
-
-}));
-//clear searchResponse list (and search bar?)
-}*/
+	//clear searchResponse list (and search bar?)
+}
 
 function moveToWatchedList() {
 	//listen for user to click or check desired movie
