@@ -1,4 +1,4 @@
-//global function to hold API search request
+//global variables
 var searchResults;
 var selectedID;
 var titleForList;
@@ -36,10 +36,10 @@ $(document).on('keypress', '#addToList', ((e) => {
 $(document).on('click', '#search', ((e) => {
 	e.preventDefault();
 	var movieTitle = $('#addToList').val();
-	movieSearch(movieTitle, updateList);
+	movieSearch(movieTitle, updateSearchList);
 }));
 
-function updateList(response) {
+function updateSearchList(response) {
 	var html = '';
 	html += '<div>' + '<h2>Search Results</h2>';
 	html += '</div>';
@@ -76,6 +76,7 @@ function updateList(response) {
 						console.log('hi');
 					}
 				});
+				// clear searchResponse list (and search bar?)
 				// call updateWatchList() to display the user's list
 				updateWatchList();
 			}
@@ -83,33 +84,55 @@ function updateList(response) {
 	}));
 }
 
-function updateWatchList() {
-	var documentReference = db.collection('movies').doc(selectedID);
-	//var usersMovieRef = db.collection('users').doc(auth.currentUser.uid).collection('movieList').doc(selectedID);
+async function updateWatchList() {
+	// iterate through user's movie list and get each imdbID
+	var usersMovieRef = db.collection('users').doc(auth.currentUser.uid).collection('movieList');
+	const yourData = await usersMovieRef.get().then((snapshot) => {
+		const temp = [];
+		const response = snapshot.forEach((doc) => {
+			temp.push(doc.data());
+		});
+		return temp;
+	});
+	// for each imdbID from user's movie list, get matching doc from movies collection
+	for (var doc of yourData) {
+		console.log(doc);
+		var documentReference = db.collection('movies').doc(doc.movie);
+		const yourNewData = await documentReference.get().then((data) => {
+			console.log(data);
+			return data.data();
+			// get title from data
+			// display (append?) titles in watch list
+		});
+	}
+
 	//console.log(selectedID);
-	documentReference.get().then(function(documentSnapshot) {
+	/*documentReference.get().then(function(documentSnapshot) {
 		if (documentSnapshot.exists) {
 			var data = documentSnapshot.data();
 			titleForList = data.Title;
-			console.log(titleForList);
+			console.log(watchListData);
+			// append to html in Watch List with label checkbox-inline
+			var i;
+			var html = '';
+			html += '<div><h2>Watch List</h2></div>';
+			html += '<ul class="addedWatchList">';
+			for (i = 0; i < watchListData.length; i++) {
+				html += '<li><label class="checkbox-inline">';
+				html += '<input type = "checkbox" value ="">';
+				html += titleForList;
+				html += '</label></li>';
+			}
+			html += '</ul>';
+			$('#watchListContent').html(html);
 		} else {
 			console.log('document not found');
 		}
-	});
+	});*/
 }
 
 function appendToWatch() {
-	// append to html in Watch List with label checkbox-inline
-	var html = '';
-	html += '<div><h2>Watch List</h2></div>';
-	html += '<ul class="addedWatchList">';
-	html += '<li><label class="checkbox-inline">';
-	html += '<input type = "checkbox" value =""> ';
-	html += titleForList;
-	html += '</label></li>';
-	html += '</ul>';
-	$('#watchListContent').html(html);
-	//clear searchResponse list (and search bar?)
+
 }
 
 function moveToWatchedList() {
