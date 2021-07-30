@@ -3,6 +3,7 @@ auth.onAuthStateChanged(user => {
 	if (user) {
 		console.log('user logged in: ', user);
 		$(':mobile-pagecontainer').pagecontainer('change', '#homePageLogin');
+		// load watch list
 	} else {
 		console.log('user logged out');
 		$(':mobile-pagecontainer').pagecontainer('change', '#homePageNotLogin');

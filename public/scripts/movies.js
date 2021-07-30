@@ -17,7 +17,7 @@ function movieSearch(title, callback) {
 			"x-rapidapi-host": "movie-database-imdb-alternative.p.rapidapi.com"
 		}
 	};
-
+	// after the search has completed, parse the results into strings
 	$.ajax(settings).done(function(response) {
 		//console.log(response);
 		callback(response);
@@ -39,6 +39,7 @@ $(document).on('click', '#search', ((e) => {
 	movieSearch(movieTitle, updateSearchList);
 }));
 
+// iterate through all responses returned by the API & display them as buttons in the returned search list
 function updateSearchList(response) {
 	var html = '';
 	html += '<div>' + '<h2>Search Results</h2>';
@@ -84,6 +85,10 @@ function updateSearchList(response) {
 	}));
 }
 
+// iterate through the user's movielist, match the id's to the movies list,
+// grab the data for each movie from the movies collection, get just the title
+// from the data, and display the titles in a checklist in the "watch list"
+// section of the user's movie page
 async function updateWatchList() {
 	// iterate through user's movie list and get each imdbID
 	var usersMovieRef = db.collection('users').doc(auth.currentUser.uid).collection('movieList');
@@ -99,9 +104,9 @@ async function updateWatchList() {
 		console.log(doc);
 		var documentReference = db.collection('movies').doc(doc.movie);
 		const yourNewData = await documentReference.get().then((data) => {
-			console.log(data);
-			return data.data();
-			// get title from data
+			titleForList = data.data();
+			console.log(titleForList.Title);
+			return titleForList.Title;
 			// display (append?) titles in watch list
 		});
 	}
