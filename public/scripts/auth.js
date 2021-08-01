@@ -3,6 +3,9 @@ auth.onAuthStateChanged(user => {
 	if (user) {
 		console.log('user logged in: ', user);
 		$(':mobile-pagecontainer').pagecontainer('change', '#homePageLogin');
+		db.collection('users').doc(auth.currentUser.uid).collection('movieList').onSnapshot(snapshot => {
+			updateWatchList();
+		});
 		// load user's watch list
 	} else {
 		console.log('user logged out');

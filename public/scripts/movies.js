@@ -17,6 +17,7 @@ function movieSearch(title, callback) {
 			"x-rapidapi-host": "movie-database-imdb-alternative.p.rapidapi.com"
 		}
 	};
+
 	// after the search has completed, parse the results into strings
 	$.ajax(settings).done(function(response) {
 		callback(response);
@@ -149,6 +150,7 @@ async function updateWatchList() {
 
 function moveToWatchedList() {
 	//listen for user to click or check desired movie
+
 	//append to html in Watched List
 	//remove movie from Watch List
 }
