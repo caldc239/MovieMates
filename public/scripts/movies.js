@@ -3,14 +3,6 @@ var searchResults;
 var selectedID;
 var titleForList;
 
-
-function sleep(ms) {
-	return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-
-
-
 //pass user input to function movieSearch to return movie options
 function movieSearch(title, callback) {
 	var encoded = encodeURIComponent(title);
@@ -27,10 +19,8 @@ function movieSearch(title, callback) {
 	};
 	// after the search has completed, parse the results into strings
 	$.ajax(settings).done(function(response) {
-		//console.log(response);
 		callback(response);
 		searchResults = JSON.parse(JSON.stringify(response));
-		console.log(searchResults);
 	});
 }
 
@@ -86,8 +76,10 @@ async function updateSearchList(response) {
 					console.log('hi');
 				}
 				// clear searchResponse list (and search bar?)
+				$('#searchResponse').empty();
+				$('#addToList').val('');
 				// call updateWatchList() to display the user's list
-				await sleep(1000);
+				// await sleep(2000);
 				updateWatchList();
 			}
 		}
@@ -159,4 +151,8 @@ function moveToWatchedList() {
 	//listen for user to click or check desired movie
 	//append to html in Watched List
 	//remove movie from Watch List
+}
+
+function sleep(ms) {
+	return new Promise(resolve => setTimeout(resolve, ms));
 }
