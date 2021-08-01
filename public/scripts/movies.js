@@ -3,6 +3,14 @@ var searchResults;
 var selectedID;
 var titleForList;
 
+
+function sleep(ms) {
+	return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+
+
+
 //pass user input to function movieSearch to return movie options
 function movieSearch(title, callback) {
 	var encoded = encodeURIComponent(title);
@@ -40,7 +48,7 @@ $(document).on('click', '#search', ((e) => {
 }));
 
 // iterate through all responses returned by the API & display them as buttons in the returned search list
-function updateSearchList(response) {
+async function updateSearchList(response) {
 	var html = '';
 	html += '<div>' + '<h2>Search Results</h2>';
 	html += '</div>';
@@ -54,7 +62,7 @@ function updateSearchList(response) {
 	$('#searchResponse').html(html);
 
 	//listen for user to click desired movie
-	$('.searchList * :button').on('click', ((e) => {
+	$('.searchList * :button').on('click', async function(e) {
 		e.preventDefault();
 		console.log(e);
 		//variable to hold extracted movie.imdbID
@@ -65,58 +73,69 @@ function updateSearchList(response) {
 		for (var i = 0; i < searchResults.Search.length; i++) {
 			if (searchResults.Search[i].imdbID == movieID) {
 				db.collection('movies').doc(movieID).set(searchResults.Search[i]);
-				// check if user id exists in db.collection, if not add them and set blank field?
 				// add movieID to user's watch list collection
 				const usersRef = db.collection('users').doc(auth.currentUser.uid);
-				const doc = usersRef.get().then((doc) => {
-					if (!doc.exists) {
-						db.collection('users').doc(auth.currentUser.uid).collection('movieList').doc(movieID).set({
-							movie: movieID
-						});
-					} else {
-						console.log('hi');
-					}
+				const doc = await usersRef.get().then((doc) => {
+					return doc;
 				});
+				if (!doc.exists) {
+					db.collection('users').doc(auth.currentUser.uid).collection('movieList').doc(movieID).set({
+						movie: movieID
+					});
+				} else {
+					console.log('hi');
+				}
 				// clear searchResponse list (and search bar?)
 				// call updateWatchList() to display the user's list
+				await sleep(1000);
 				updateWatchList();
 			}
 		}
-	}));
+	});
 }
 
-// iterate through the user's movielist, match the id's to the movies list,
-// grab the data for each movie from the movies collection, get just the title
-// from the data, and display the titles in a checklist in the "watch list"
-// section of the user's movie page
+/* iterate through the user's movielist, match the id's to the movies list,
+ grab the data for each movie from the movies collection, get just the title
+ from the data, and display the titles in a checklist in the "watch list"
+ section of the user's movie page */
 async function updateWatchList() {
 	// iterate through user's movie list and get each imdbID
 	var usersMovieRef = db.collection('users').doc(auth.currentUser.uid).collection('movieList');
-	const yourData = await usersMovieRef.get().then((snapshot) => {
-		const temp = [];
-		const response = snapshot.forEach((doc) => {
+	var yourData = await usersMovieRef.get().then((snapshot) => {
+		var temp = [];
+		var response = snapshot.forEach((doc) => {
 			temp.push(doc.data());
 		});
 		return temp;
 	});
 	// for each imdbID from user's movie list, get matching doc from movies collection
+	//$('#watchListContent').empty();
+	var html = '';
+	html += '<div><h2>Watch List</h2></div>';
+	//html += '<ul class="addedWatchList">';
 	for (var doc of yourData) {
-		console.log(doc);
+		// console.log(doc);
 		var documentReference = db.collection('movies').doc(doc.movie);
-		const yourNewData = await documentReference.get().then((data) => {
-			titleForList = data.data();
-			console.log(titleForList.Title);
-			return titleForList.Title;
-			// display (append?) titles in watch list
+		var yourNewData = await documentReference.get().then((data) => {
+			return data.data();
 		});
+		titleForList = yourNewData.Title;
+		html += '<li><label class="checkbox-inline">';
+		html += '<input type = "checkbox" value ="">';
+		html += titleForList;
+		html += '</label></li>';
+		//$('#watchListContent').append('<li><label class = "checkbox-inline"><input type = "checkbox" value="">' +
+		//titleForList + '</label></li>');
 	}
+	//html += '</ul>';
+	$('.addedWatchList').html(html);
 
-	//console.log(selectedID);
+
+
 	/*documentReference.get().then(function(documentSnapshot) {
 		if (documentSnapshot.exists) {
 			var data = documentSnapshot.data();
 			titleForList = data.Title;
-			console.log(watchListData);
 			// append to html in Watch List with label checkbox-inline
 			var i;
 			var html = '';
@@ -134,10 +153,6 @@ async function updateWatchList() {
 			console.log('document not found');
 		}
 	});*/
-}
-
-function appendToWatch() {
-
 }
 
 function moveToWatchedList() {
