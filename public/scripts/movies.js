@@ -71,7 +71,8 @@ async function updateSearchList(response) {
 				});
 				if (!doc.exists) {
 					db.collection('users').doc(auth.currentUser.uid).collection('movieList').doc(movieID).set({
-						movie: movieID
+						movie: movieID,
+						watched: false
 					});
 				} else {
 					console.log('hi');
@@ -123,8 +124,6 @@ async function updateWatchList() {
 	//html += '</ul>';
 	$('.addedWatchList').html(html);
 
-
-
 	/*documentReference.get().then(function(documentSnapshot) {
 		if (documentSnapshot.exists) {
 			var data = documentSnapshot.data();
@@ -150,7 +149,6 @@ async function updateWatchList() {
 
 function moveToWatchedList() {
 	//listen for user to click or check desired movie
-
 	//append to html in Watched List
 	//remove movie from Watch List
 }
@@ -158,3 +156,14 @@ function moveToWatchedList() {
 function sleep(ms) {
 	return new Promise(resolve => setTimeout(resolve, ms));
 }
+
+// add imdbID as id to movies in watch list 
+// create html buttons with default as "disabled" (watched/delete on watch list, watch/delete on watched list?)
+// if user selects any of the checkboxes on either page, change buttons to active
+// if user selects "watched," move to watched list & remove from watch list
+// change matching field in firestore doc (ie watched: false --> watched = true)
+// if user selects "watch," move to watch list and remove from watched list
+// change matching field in firestore doc (ie watched: true --> watched = false)
+// if user selects "delete," remove from any list (and users movie list?)
+// sort lists
+// display movie info on click? maybe "i" button next to each one?
