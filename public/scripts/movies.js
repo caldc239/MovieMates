@@ -115,7 +115,7 @@ async function updateWatchList() {
 		});
 		titleForList = yourNewData.Title;
 		html += '<li><label class="checkbox-inline">';
-		html += '<input type = "checkbox" value ="">';
+		html += '<input type="checkbox" id="chbx_' + yourNewData.imdbID + '" value ="">';
 		html += titleForList;
 		html += '</label></li>';
 		//$('#watchListContent').append('<li><label class = "checkbox-inline"><input type = "checkbox" value="">' +
@@ -157,7 +157,8 @@ function sleep(ms) {
 	return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-// add imdbID as id to movies in watch list 
+// TODO:
+// add imdbID as id to movies in watch list
 // create html buttons with default as "disabled" (watched/delete on watch list, watch/delete on watched list?)
 // if user selects any of the checkboxes on either page, change buttons to active
 // if user selects "watched," move to watched list & remove from watch list
