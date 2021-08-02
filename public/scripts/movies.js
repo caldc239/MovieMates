@@ -95,7 +95,7 @@ async function updateSearchList(response) {
 async function updateWatchList() {
 	// iterate through user's movie list and get each imdbID
 	var usersMovieRef = db.collection('users').doc(auth.currentUser.uid).collection('movieList');
-	var yourData = await usersMovieRef.get().then((snapshot) => {
+	var yourData = await usersMovieRef.where("watched", "==", false).get().then((snapshot) => {
 		var temp = [];
 		var response = snapshot.forEach((doc) => {
 			temp.push(doc.data());
@@ -121,6 +121,8 @@ async function updateWatchList() {
 		//$('#watchListContent').append('<li><label class = "checkbox-inline"><input type = "checkbox" value="">' +
 		//titleForList + '</label></li>');
 	}
+	html += '<button type="button" class="addBtn" disabled>Watched!</button>';
+	html += '<button type="button" class="deleteBtn" disabled>Delete</button>';
 	//html += '</ul>';
 	$('.addedWatchList').html(html);
 
@@ -148,9 +150,23 @@ async function updateWatchList() {
 }
 
 function moveToWatchedList() {
-	//listen for user to click or check desired movie
-	//append to html in Watched List
-	//remove movie from Watch List
+	// listen for user to click or check desired movie(s)
+	// activate buttons for "watched" and "delete"
+	// if user selects "watched," set "watched" field in doc to "true"
+	// append to html in Watched List & remove from Watch list
+	// if user selects "delete," call deleteFromList();
+}
+
+function movetoWatchList() {
+	// listen for user to click or check desired movie(s)
+	// activate buttons for "watch" and "delete"
+	// if user selects "watch," set "watched" field in doc to "false"
+	// append to html in Watch list & remove from Watched list
+	// if user selects "delete," call deleteFromList();
+}
+
+function deleteFromList() {
+	// delete from firestore db
 }
 
 function sleep(ms) {
@@ -158,8 +174,7 @@ function sleep(ms) {
 }
 
 // TODO:
-// add imdbID as id to movies in watch list
-// create html buttons with default as "disabled" (watched/delete on watch list, watch/delete on watched list?)
+// create html buttons with default as "disabled" (watch/delete on watched list)
 // if user selects any of the checkboxes on either page, change buttons to active
 // if user selects "watched," move to watched list & remove from watch list
 // change matching field in firestore doc (ie watched: false --> watched = true)

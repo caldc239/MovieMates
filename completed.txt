@@ -1,0 +1,3 @@
+COMPLETED TASKS
+// add imdbID as id to movies in watch list
+// create html buttons with default as "disabled" (watched/delete on watch list)
