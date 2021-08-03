@@ -115,7 +115,7 @@ async function updateWatchList() {
 		});
 		titleForList = yourNewData.Title;
 		html += '<li><label class="checkbox-inline">';
-		html += '<input type="checkbox" id="chbx_' + yourNewData.imdbID + '" value ="">';
+		html += '<input type="checkbox" id="chbx_' + yourNewData.imdbID + '" value ="" onClick="moveToWatchedList()">';
 		html += titleForList;
 		html += '</label></li>';
 		//$('#watchListContent').append('<li><label class = "checkbox-inline"><input type = "checkbox" value="">' +
@@ -149,8 +149,13 @@ async function updateWatchList() {
 	});*/
 }
 
+
 function moveToWatchedList() {
 	// listen for user to click or check desired movie(s)
+	if ($('input[type="checkbox"]').prop('checked')) {
+		console.log('hello there');
+	}
+
 	// activate buttons for "watched" and "delete"
 	// if user selects "watched," set "watched" field in doc to "true"
 	// append to html in Watched List & remove from Watch list
