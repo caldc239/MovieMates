@@ -152,11 +152,16 @@ async function updateWatchList() {
 
 function moveToWatchedList() {
 	// listen for user to click or check desired movie(s)
-	if ($('input[type="checkbox"]').prop('checked')) {
-		console.log('hello there');
-	}
+	$('input[type="checkbox"]').each(function() {
+		if ($(this).prop('checked')) {
+			console.log('hello there');
+			// activate buttons for "watched" and "delete"
+			$('.addBtn').prop('disabled', false);
+			$('.deleteBtn').prop('disabled', false);
+		}
+	});
 
-	// activate buttons for "watched" and "delete"
+
 	// if user selects "watched," set "watched" field in doc to "true"
 	// append to html in Watched List & remove from Watch list
 	// if user selects "delete," call deleteFromList();
