@@ -115,7 +115,7 @@ async function updateWatchList() {
 		});
 		titleForList = yourNewData.Title;
 		html += '<li><label class="checkbox-inline">';
-		html += '<input type="checkbox" id="chbx_' + yourNewData.imdbID + '" value ="" onClick="moveToWatchedList()">';
+		html += '<input type="checkbox" id="chbx_' + yourNewData.imdbID + '" value ="" onClick="checkboxCheck()">';
 		html += titleForList;
 		html += '</label></li>';
 		//$('#watchListContent').append('<li><label class = "checkbox-inline"><input type = "checkbox" value="">' +
@@ -149,19 +149,25 @@ async function updateWatchList() {
 	});*/
 }
 
-
-function moveToWatchedList() {
+// function checked() that checks the checkboxes, then calls either
+// moveToWatchedList or movetoWatchList based on the button clicked
+function checkboxCheck() {
 	// listen for user to click or check desired movie(s)
 	$('input[type="checkbox"]').each(function() {
 		if ($(this).prop('checked')) {
-			console.log('hello there');
+			// extract chbxID (imdbID)
+			// var chbxID = $(this).target.id.substring(5);
+			// console.log(chbxID);
 			// activate buttons for "watched" and "delete"
 			$('.addBtn').prop('disabled', false);
 			$('.deleteBtn').prop('disabled', false);
+			// if user clicks "watched," call moveToWatchedList()
+			//if user clicks "delete," call deleteFromList()
 		}
 	});
+}
 
-
+function moveToWatchedList() {
 	// if user selects "watched," set "watched" field in doc to "true"
 	// append to html in Watched List & remove from Watch list
 	// if user selects "delete," call deleteFromList();
