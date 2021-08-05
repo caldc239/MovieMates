@@ -115,16 +115,17 @@ async function updateWatchList() {
 		});
 		titleForList = yourNewData.Title;
 		html += '<li><label class="checkbox-inline">';
-		html += '<input type="checkbox" id="chbx_' + yourNewData.imdbID + '" value ="" onClick="checkboxCheck()">';
+		html += '<input type="checkbox" id="chbx_' + yourNewData.imdbID +
+			'" value ="" onClick="checkboxCheck(\'#addedWatchList\')">';
 		html += titleForList;
 		html += '</label></li>';
 		//$('#watchListContent').append('<li><label class = "checkbox-inline"><input type = "checkbox" value="">' +
 		//titleForList + '</label></li>');
 	}
-	html += '<button type="button" class="addBtn" disabled>Watched!</button>';
-	html += '<button type="button" class="deleteBtn" disabled>Delete</button>';
+	html += '<button type="button" id="addBtn" disabled>Watched!</button>';
+	html += '<button type="button" id="deleteBtn" disabled>Delete</button>';
 	//html += '</ul>';
-	$('.addedWatchList').html(html);
+	$('#addedWatchList').html(html);
 
 	/*documentReference.get().then(function(documentSnapshot) {
 		if (documentSnapshot.exists) {
@@ -149,18 +150,19 @@ async function updateWatchList() {
 	});*/
 }
 
-// function checked() that checks the checkboxes, then calls either
+// function checkboxCheck() that checks the checkboxes, then calls either
 // moveToWatchedList or movetoWatchList based on the button clicked
-function checkboxCheck() {
-	// listen for user to click or check desired movie(s)
-	$('input[type="checkbox"]').each(function() {
+function checkboxCheck(listID) {
+	// listen for user to click or check desired movie(s) on specific list
+	$(listID + ' * input[type="checkbox"]').each(function() {
 		if ($(this).prop('checked')) {
+			console.log('hi');
 			// extract chbxID (imdbID)
-			// var chbxID = $(this).target.id.substring(5);
-			// console.log(chbxID);
+			var chbxID = $(this).attr('id').substring(5);
+			console.log(chbxID);
 			// activate buttons for "watched" and "delete"
-			$('.addBtn').prop('disabled', false);
-			$('.deleteBtn').prop('disabled', false);
+			$('#addBtn').prop('disabled', false);
+			$('#deleteBtn').prop('disabled', false);
 			// if user clicks "watched," call moveToWatchedList()
 			//if user clicks "delete," call deleteFromList()
 		}
@@ -191,7 +193,6 @@ function sleep(ms) {
 
 // TODO:
 // create html buttons with default as "disabled" (watch/delete on watched list)
-// if user selects any of the checkboxes on either page, change buttons to active
 // if user selects "watched," move to watched list & remove from watch list
 // change matching field in firestore doc (ie watched: false --> watched = true)
 // if user selects "watch," move to watch list and remove from watched list

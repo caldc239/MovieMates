@@ -31,6 +31,10 @@
   width: 80%
 }
 
-ul.searchList, ul.addedWatchList {
+ul.searchList {
+  list-style-type: none;
+}
+
+ul#addedWatchList, ul#watchListPage {
   list-style-type: none;
 }
