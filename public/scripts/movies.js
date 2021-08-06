@@ -116,7 +116,7 @@ async function updateWatchList() {
 		titleForList = yourNewData.Title;
 		html += '<li><label class="checkbox-inline">';
 		html += '<input type="checkbox" id="chbx_' + yourNewData.imdbID +
-			'" value ="" onClick="checkboxCheck(\'#addedWatchList\')">';
+			'" value ="" onClick="checkboxListener(\'addedWatchList\')">';
 		html += titleForList;
 		html += '</label></li>';
 		//$('#watchListContent').append('<li><label class = "checkbox-inline"><input type = "checkbox" value="">' +
@@ -153,23 +153,49 @@ async function updateWatchList() {
 // function checkboxCheck() that checks the checkboxes, then calls either
 // moveToWatchedList or movetoWatchList based on the button clicked
 function checkboxCheck(listID) {
-	// listen for user to click or check desired movie(s) on specific list
-	$(listID + ' * input[type="checkbox"]').each(function() {
+	var chbxArray = [];
+	// verify which list in which user clicked or checked desired movie(s)
+	$('#' + listID + ' * input[type="checkbox"]').each(function() {
 		if ($(this).prop('checked')) {
 			console.log('hi');
 			// extract chbxID (imdbID)
 			var chbxID = $(this).attr('id').substring(5);
-			console.log(chbxID);
-			// activate buttons for "watched" and "delete"
-			$('#addBtn').prop('disabled', false);
-			$('#deleteBtn').prop('disabled', false);
-			// if user clicks "watched," call moveToWatchedList()
-			//if user clicks "delete," call deleteFromList()
+			chbxArray.push(chbxID);
 		}
 	});
+	console.log(chbxArray);
+	return chbxArray;
 }
 
-function moveToWatchedList() {
+function checkboxListener(listID) {
+	var list = checkboxCheck(listID);
+	// activate buttons for "watched" and "delete"
+	switch (listID) {
+		case "addedWatchList":
+			$('#addBtn').prop('disabled', (list.length == 0));
+			$('#deleteBtn').prop('disabled', (list.length == 0));
+			break;
+		case "watchListPage":
+			// add button with new id for different page
+			// delete button with new id for different page
+			break;
+		case "watchedListPage":
+			// move button with new id
+			// delete button with new id for different page
+			break;
+	}
+}
+
+
+// check which list the user is in, perform appropriate actions
+/*	case "addedWatchList":
+
+		// if user clicks "watched," call moveToWatchedList(chbxID)
+		$('#addBtn').click(moveToWatchedList());
+		//if user clicks "delete," call deleteFromList()
+}*/
+
+function moveToWatchedList(watchedID) {
 	// if user selects "watched," set "watched" field in doc to "true"
 	// append to html in Watched List & remove from Watch list
 	// if user selects "delete," call deleteFromList();
@@ -192,6 +218,8 @@ function sleep(ms) {
 }
 
 // TODO:
+// change updateWatchList to updateList(listID)
+// create switch statement inside updateList(listID) to build the list for whatever listID is passed
 // create html buttons with default as "disabled" (watch/delete on watched list)
 // if user selects "watched," move to watched list & remove from watch list
 // change matching field in firestore doc (ie watched: false --> watched = true)
