@@ -127,6 +127,11 @@ async function updateList(listID) {
 			html += '<button type="button" id="addBtn" disabled>Watched!</button>';
 			html += '<button type="button" id="deleteBtn" disabled>Delete</button>';
 			$('#' + listID).html(html);
+			$('#addBtn').click(function(e) {
+				e.preventDefault();
+				console.log('howdy');
+				moveToWatchedList('watchListPage');
+			});
 			break;
 		case "haveWatchedPage":
 			console.log('cass');
@@ -161,6 +166,11 @@ async function updateList(listID) {
 			html += '<button type="button" id="watchBtn" disabled>Move to watch list</button>';
 			html += '<button type="button" id="dltBtn" disabled>Delete</button>';
 			$('#' + listID).html(html);
+			$('#watchBtn').click(function(e) {
+				e.preventDefault();
+				console.log('howdy');
+				moveToWatchList('haveWatchedPage');
+			});
 			break;
 		default:
 			console.log('uh oh');
@@ -192,34 +202,38 @@ function checkboxListener(listID) {
 			$('#addBtn').prop('disabled', (list.length == 0));
 			$('#deleteBtn').prop('disabled', (list.length == 0));
 			break;
-		case "watchedListPage":
+		case "haveWatchedPage":
 			$('#watchBtn').prop('disabled', (list.length == 0));
 			$('#dltBtn').prop('disabled', (list.length == 0));
 			break;
 	}
 }
 
-
-// check which list the user is in, perform appropriate actions
-/*	case "addedWatchList":
-
-		// if user clicks "watched," call moveToWatchedList(chbxID)
-		$('#addBtn').click(moveToWatchedList());
-		//if user clicks "delete," call deleteFromList()
-}*/
-
-function moveToWatchedList(watchedID) {
-	// if user selects "watched," set "watched" field in doc to "true"
-	// append to html in Watched List & remove from Watch list
-	// if user selects "delete," call deleteFromList();
+async function moveToWatchedList(listID) {
+	var temp = checkboxCheck(listID);
+	console.log(temp);
+	// set "watched" field in doc to "true"
+	for (var i = 0; i < temp.length; i++) {
+		console.log('1');
+		await db.collection('users').doc(auth.currentUser.uid).collection('movieList').doc(temp[i]).update({
+			watched: true
+		});
+	}
+	console.log('2');
 }
 
-function movetoWatchList() {
-	// listen for user to click or check desired movie(s)
-	// activate buttons for "watch" and "delete"
-	// if user selects "watch," set "watched" field in doc to "false"
-	// append to html in Watch list & remove from Watched list
-	// if user selects "delete," call deleteFromList();
+async function moveToWatchList(listID) {
+	// set "watched" field in doc to "false"
+	var temp = checkboxCheck(listID);
+	console.log(temp);
+	// set "watched" field in doc to "true"
+	for (var i = 0; i < temp.length; i++) {
+		console.log('3');
+		await db.collection('users').doc(auth.currentUser.uid).collection('movieList').doc(temp[i]).update({
+			watched: false
+		});
+	}
+	console.log('4');
 }
 
 function deleteFromList() {
@@ -231,11 +245,6 @@ function sleep(ms) {
 }
 
 // TODO:
-// change updateWatchList to updateList(listID)
-// create switch statement inside updateList(listID) to build the list for whatever listID is passed
-// create html buttons with default as "disabled" (watch/delete on watched list)
-// if user selects "watched," move to watched list & remove from watch list
-// change matching field in firestore doc (ie watched: false --> watched = true)
 // if user selects "watch," move to watch list and remove from watched list
 // change matching field in firestore doc (ie watched: true --> watched = false)
 // if user selects "delete," remove from any list (and users movie list?)

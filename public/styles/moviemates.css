@@ -35,6 +35,7 @@ ul.searchList {
   list-style-type: none;
 }
 
-ul#watchListPage, ul#haveWatchedPage {
+#watchListPage, #haveWatchedPage {
   list-style-type: none;
+  padding: 0;
 }

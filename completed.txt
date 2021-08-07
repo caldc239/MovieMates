@@ -2,3 +2,8 @@ COMPLETED TASKS
 // add imdbID as id to movies in watch list
 // create html buttons with default as "disabled" (watched/delete on watch list)
 // if user selects any of the checkboxes on either page, change buttons to active
+// change updateWatchList to updateList(listID)
+// create switch statement inside updateList(listID) to build the list for whatever listID is passed
+// create html buttons with default as "disabled" (watch/delete on watched list)
+// if user selects "watched," move to watched list & remove from watch list
+// change matching field in firestore doc (ie watched: false --> watched = true)
