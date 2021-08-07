@@ -80,9 +80,9 @@ async function updateSearchList(response) {
 				// clear searchResponse list (and search bar?)
 				$('#searchResponse').empty();
 				$('#addToList').val('');
-				// call updateWatchList() to display the user's list
+				// call updateList() to display the user's list
 				// await sleep(2000);
-				updateWatchList();
+				updateList('watchListPage');
 			}
 		}
 	});
@@ -90,64 +90,81 @@ async function updateSearchList(response) {
 
 /* iterate through the user's movielist, match the id's to the movies list,
  grab the data for each movie from the movies collection, get just the title
- from the data, and display the titles in a checklist in the "watch list"
- section of the user's movie page */
-async function updateWatchList() {
-	// iterate through user's movie list and get each imdbID
-	var usersMovieRef = db.collection('users').doc(auth.currentUser.uid).collection('movieList');
-	var yourData = await usersMovieRef.where("watched", "==", false).get().then((snapshot) => {
-		var temp = [];
-		var response = snapshot.forEach((doc) => {
-			temp.push(doc.data());
-		});
-		return temp;
-	});
-	// for each imdbID from user's movie list, get matching doc from movies collection
-	//$('#watchListContent').empty();
-	var html = '';
-	html += '<div><h2>Watch List</h2></div>';
-	//html += '<ul class="addedWatchList">';
-	for (var doc of yourData) {
-		// console.log(doc);
-		var documentReference = db.collection('movies').doc(doc.movie);
-		var yourNewData = await documentReference.get().then((data) => {
-			return data.data();
-		});
-		titleForList = yourNewData.Title;
-		html += '<li><label class="checkbox-inline">';
-		html += '<input type="checkbox" id="chbx_' + yourNewData.imdbID +
-			'" value ="" onClick="checkboxListener(\'addedWatchList\')">';
-		html += titleForList;
-		html += '</label></li>';
-		//$('#watchListContent').append('<li><label class = "checkbox-inline"><input type = "checkbox" value="">' +
-		//titleForList + '</label></li>');
-	}
-	html += '<button type="button" id="addBtn" disabled>Watched!</button>';
-	html += '<button type="button" id="deleteBtn" disabled>Delete</button>';
-	//html += '</ul>';
-	$('#addedWatchList').html(html);
-
-	/*documentReference.get().then(function(documentSnapshot) {
-		if (documentSnapshot.exists) {
-			var data = documentSnapshot.data();
-			titleForList = data.Title;
-			// append to html in Watch List with label checkbox-inline
-			var i;
+ from the data, and display the titles in a checklist in the "watch list" or
+ "have-watched list" section of the user's movie page */
+async function updateList(listID) {
+	switch (listID) {
+		case "watchListPage":
+			console.log('rey');
+			// iterate through user's movie list and get each imdbID
+			var usersMovieRef = db.collection('users').doc(auth.currentUser.uid).collection('movieList');
+			var yourData = await usersMovieRef.where("watched", "==", false).get().then((snapshot) => {
+				var temp = [];
+				var response = snapshot.forEach((doc) => {
+					temp.push(doc.data());
+				});
+				return temp;
+			});
+			// for each imdbID from user's movie list, get matching doc from movies collection
+			//$('#watchListContent').empty();
 			var html = '';
 			html += '<div><h2>Watch List</h2></div>';
-			html += '<ul class="addedWatchList">';
-			for (i = 0; i < watchListData.length; i++) {
+			for (var doc of yourData) {
+				// console.log(doc);
+				var documentReference = db.collection('movies').doc(doc.movie);
+				var yourNewData = await documentReference.get().then((data) => {
+					return data.data();
+				});
+				titleForList = yourNewData.Title;
 				html += '<li><label class="checkbox-inline">';
-				html += '<input type = "checkbox" value ="">';
+				html += '<input type="checkbox" id="chbx_' + yourNewData.imdbID +
+					'" value ="" onClick="checkboxListener(\'watchListPage\')">';
 				html += titleForList;
 				html += '</label></li>';
+				//$('#watchListContent').append('<li><label class = "checkbox-inline"><input type = "checkbox" value="">' +
+				//titleForList + '</label></li>');
 			}
-			html += '</ul>';
-			$('#watchListContent').html(html);
-		} else {
-			console.log('document not found');
-		}
-	});*/
+			html += '<button type="button" id="addBtn" disabled>Watched!</button>';
+			html += '<button type="button" id="deleteBtn" disabled>Delete</button>';
+			$('#' + listID).html(html);
+			break;
+		case "haveWatchedPage":
+			console.log('cass');
+			// iterate through user's movie list and get each imdbID
+			var usersMovieRef = db.collection('users').doc(auth.currentUser.uid).collection('movieList');
+			var yourData = await usersMovieRef.where("watched", "==", true).get().then((snapshot) => {
+				var temp = [];
+				var response = snapshot.forEach((doc) => {
+					temp.push(doc.data());
+				});
+				return temp;
+			});
+			// for each imdbID from user's movie list, get matching doc from movies collection
+			//$('#watchListContent').empty();
+			var html = '';
+			html += '<div><h2>Have-Watched List</h2></div>';
+			for (var doc of yourData) {
+				// console.log(doc);
+				var documentReference = db.collection('movies').doc(doc.movie);
+				var yourNewData = await documentReference.get().then((data) => {
+					return data.data();
+				});
+				titleForList = yourNewData.Title;
+				html += '<li><label class="checkbox-inline">';
+				html += '<input type="checkbox" id="chbx_' + yourNewData.imdbID +
+					'" value ="" onClick="checkboxListener(\'haveWatchedPage\')">';
+				html += titleForList;
+				html += '</label></li>';
+				//$('#watchListContent').append('<li><label class = "checkbox-inline"><input type = "checkbox" value="">' +
+				//titleForList + '</label></li>');
+			}
+			html += '<button type="button" id="watchBtn" disabled>Move to watch list</button>';
+			html += '<button type="button" id="dltBtn" disabled>Delete</button>';
+			$('#' + listID).html(html);
+			break;
+		default:
+			console.log('uh oh');
+	}
 }
 
 // function checkboxCheck() that checks the checkboxes, then calls either
@@ -171,17 +188,13 @@ function checkboxListener(listID) {
 	var list = checkboxCheck(listID);
 	// activate buttons for "watched" and "delete"
 	switch (listID) {
-		case "addedWatchList":
+		case "watchListPage":
 			$('#addBtn').prop('disabled', (list.length == 0));
 			$('#deleteBtn').prop('disabled', (list.length == 0));
 			break;
-		case "watchListPage":
-			// add button with new id for different page
-			// delete button with new id for different page
-			break;
 		case "watchedListPage":
-			// move button with new id
-			// delete button with new id for different page
+			$('#watchBtn').prop('disabled', (list.length == 0));
+			$('#dltBtn').prop('disabled', (list.length == 0));
 			break;
 	}
 }
@@ -228,3 +241,4 @@ function sleep(ms) {
 // if user selects "delete," remove from any list (and users movie list?)
 // sort lists
 // display movie info on click? maybe "i" button next to each one?
+// email for support
