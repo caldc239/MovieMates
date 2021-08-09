@@ -25,7 +25,8 @@ function movieSearch(title, callback) {
 	});
 }
 
-//retrieve user input from search bar and pass to movieSearch function
+// Retrieve user input from search bar via click or enter
+// and pass to movieSearch function
 $(document).on('keypress', '#addToList', ((e) => {
 	if (e.which === 13) {
 		$('#search').click();
@@ -38,7 +39,8 @@ $(document).on('click', '#search', ((e) => {
 	movieSearch(movieTitle, updateSearchList);
 }));
 
-// iterate through all responses returned by the API & display them as buttons in the returned search list
+// iterate through all responses returned by the API & display them
+// as buttons in the returned search list
 async function updateSearchList(response) {
 	var html = '';
 	html += '<div>' + '<h2>Search Results</h2>';
@@ -77,11 +79,10 @@ async function updateSearchList(response) {
 				} else {
 					console.log('hi');
 				}
-				// clear searchResponse list (and search bar?)
+				// clear searchResponse list and search bar
 				$('#searchResponse').empty();
 				$('#addToList').val('');
-				// call updateList() to display the user's list
-				// await sleep(2000);
+				// call updateList() function and pass watchListPage as the parameter
 				updateList('watchListPage');
 			}
 		}
@@ -95,7 +96,6 @@ async function updateSearchList(response) {
 async function updateList(listID) {
 	switch (listID) {
 		case "watchListPage":
-			console.log('rey');
 			// iterate through user's movie list and get each imdbID
 			var usersMovieRef = db.collection('users').doc(auth.currentUser.uid).collection('movieList');
 			var yourData = await usersMovieRef.where("watched", "==", false).get().then((snapshot) => {
@@ -105,12 +105,10 @@ async function updateList(listID) {
 				});
 				return temp;
 			});
-			// for each imdbID from user's movie list, get matching doc from movies collection
-			//$('#watchListContent').empty();
+
 			var html = '';
 			html += '<div><h2>Watch List</h2></div>';
 			for (var doc of yourData) {
-				// console.log(doc);
 				var documentReference = db.collection('movies').doc(doc.movie);
 				var yourNewData = await documentReference.get().then((data) => {
 					return data.data();
@@ -121,20 +119,25 @@ async function updateList(listID) {
 					'" value ="" onClick="checkboxListener(\'watchListPage\')">';
 				html += titleForList;
 				html += '</label></li>';
-				//$('#watchListContent').append('<li><label class = "checkbox-inline"><input type = "checkbox" value="">' +
-				//titleForList + '</label></li>');
 			}
 			html += '<button type="button" id="addBtn" disabled>Watched!</button>';
 			html += '<button type="button" id="deleteBtn" disabled>Delete</button>';
+			html += '<p>Total movies to watch: ';
+			html += yourData.length;
+			html += '</p>';
 			$('#' + listID).html(html);
+			// listen for user to click add or delete buttons and call appropriate function
 			$('#addBtn').click(function(e) {
 				e.preventDefault();
-				console.log('howdy');
 				moveToWatchedList('watchListPage');
 			});
+			$('#deleteBtn').click(function(e) {
+				e.preventDefault();
+				deleteFromList('watchListPage');
+			});
 			break;
+
 		case "haveWatchedPage":
-			console.log('cass');
 			// iterate through user's movie list and get each imdbID
 			var usersMovieRef = db.collection('users').doc(auth.currentUser.uid).collection('movieList');
 			var yourData = await usersMovieRef.where("watched", "==", true).get().then((snapshot) => {
@@ -144,8 +147,7 @@ async function updateList(listID) {
 				});
 				return temp;
 			});
-			// for each imdbID from user's movie list, get matching doc from movies collection
-			//$('#watchListContent').empty();
+
 			var html = '';
 			html += '<div><h2>Have-Watched List</h2></div>';
 			for (var doc of yourData) {
@@ -159,17 +161,25 @@ async function updateList(listID) {
 				html += '<input type="checkbox" id="chbx_' + yourNewData.imdbID +
 					'" value ="" onClick="checkboxListener(\'haveWatchedPage\')">';
 				html += titleForList;
-				html += '</label></li>';
-				//$('#watchListContent').append('<li><label class = "checkbox-inline"><input type = "checkbox" value="">' +
-				//titleForList + '</label></li>');
+				html += '</label>';
+				//html += '<img src="/images/Info_simple_bw.svg" class="info_img">';
+				html += '</li>';
 			}
 			html += '<button type="button" id="watchBtn" disabled>Move to watch list</button>';
 			html += '<button type="button" id="dltBtn" disabled>Delete</button>';
+			html += '<p>Total movies you have watched: ';
+			html += yourData.length;
+			html += '</p>';
 			$('#' + listID).html(html);
+			// listen for user to click move or dlt buttons and call appropriate function
 			$('#watchBtn').click(function(e) {
 				e.preventDefault();
-				console.log('howdy');
 				moveToWatchList('haveWatchedPage');
+			});
+			$('#dltBtn').click(function(e) {
+				e.preventDefault();
+				console.log('welcome');
+				deleteFromList('haveWatchedPage');
 			});
 			break;
 		default:
@@ -177,8 +187,7 @@ async function updateList(listID) {
 	}
 }
 
-// function checkboxCheck() that checks the checkboxes, then calls either
-// moveToWatchedList or movetoWatchList based on the button clicked
+// checkboxCheck() checks for checked boxes in a given list (listID)
 function checkboxCheck(listID) {
 	var chbxArray = [];
 	// verify which list in which user clicked or checked desired movie(s)
@@ -194,6 +203,8 @@ function checkboxCheck(listID) {
 	return chbxArray;
 }
 
+// checkboxListener() activates buttons on the appropriate list
+// (listID) if any checkbox is checked
 function checkboxListener(listID) {
 	var list = checkboxCheck(listID);
 	// activate buttons for "watched" and "delete"
@@ -209,45 +220,57 @@ function checkboxListener(listID) {
 	}
 }
 
+// moveToWatchedList() moves checked movies from "watch" to "have-watched" list
+// by setting the "watched" field to true
 async function moveToWatchedList(listID) {
 	var temp = checkboxCheck(listID);
 	console.log(temp);
 	// set "watched" field in doc to "true"
 	for (var i = 0; i < temp.length; i++) {
-		console.log('1');
 		await db.collection('users').doc(auth.currentUser.uid).collection('movieList').doc(temp[i]).update({
 			watched: true
 		});
 	}
-	console.log('2');
 }
 
+// moveToWatchList() moves checked movies from "have-watched" to "watch" list
+// by setting the "watched" field to false
 async function moveToWatchList(listID) {
-	// set "watched" field in doc to "false"
+	// get array of checked movies
 	var temp = checkboxCheck(listID);
 	console.log(temp);
-	// set "watched" field in doc to "true"
+	// set "watched" field in doc to "false"
 	for (var i = 0; i < temp.length; i++) {
-		console.log('3');
 		await db.collection('users').doc(auth.currentUser.uid).collection('movieList').doc(temp[i]).update({
 			watched: false
 		});
 	}
-	console.log('4');
 }
 
-function deleteFromList() {
-	// delete from firestore db
+// deleteFromList() removes checked movies from a given list by deleting the doc
+// from the user's collection in the database
+async function deleteFromList(listID) {
+	// get array of checked movies
+	var temp = checkboxCheck(listID);
+	console.log(temp);
+	// set "watched" field in doc to "false"
+	for (var i = 0; i < temp.length; i++) {
+		// delete from firestore db
+		await db.collection('users').doc(auth.currentUser.uid).collection('movieList').doc(temp[i]).delete().then(() => {
+			console.log("Document successfully deleted");
+		}).catch((error) => {
+			console.log("Error removing document: ", error);
+		});
+	}
 }
 
+// sleep() pauses a function for a set amount of ms
 function sleep(ms) {
 	return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 // TODO:
-// if user selects "watch," move to watch list and remove from watched list
-// change matching field in firestore doc (ie watched: true --> watched = false)
-// if user selects "delete," remove from any list (and users movie list?)
 // sort lists
 // display movie info on click? maybe "i" button next to each one?
 // email for support
+// move logout button?

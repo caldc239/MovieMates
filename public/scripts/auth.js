@@ -3,6 +3,7 @@ auth.onAuthStateChanged(user => {
 	if (user) {
 		console.log('user logged in: ', user);
 		$(':mobile-pagecontainer').pagecontainer('change', '#homePageLogin');
+		// onSnapshot listens for changes in the database & calls new updateLists()
 		db.collection('users').doc(auth.currentUser.uid).collection('movieList').onSnapshot(snapshot => {
 			updateList('watchListPage');
 			updateList('haveWatchedPage');

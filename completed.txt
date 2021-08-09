@@ -7,3 +7,7 @@ COMPLETED TASKS
 // create html buttons with default as "disabled" (watch/delete on watched list)
 // if user selects "watched," move to watched list & remove from watch list
 // change matching field in firestore doc (ie watched: false --> watched = true)
+// if user selects "watch," move to watch list and remove from watched list
+// change matching field in firestore doc (ie watched: true --> watched = false)
+// if user selects "delete," remove from any list (and users movie list?)
+// count of movies on lists

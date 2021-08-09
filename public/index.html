@@ -4,7 +4,7 @@
   <head>
     <!-- Created by Cassaundra Caldwell
       Date Created: 29 June 2021
-      Date Modified: 20 July 2021
+      Date Modified:  9 August 2021
       Description: MovieMates is a web app designed to track movies and TV shows
       a user wants to watch or has watched, provide basic info about them, and
       provide users with the ability to share their lists with friends. -->
@@ -19,6 +19,8 @@
     <!-- JS -->
     <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js" integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
+
 
   </head>
 
@@ -114,6 +116,7 @@
             <li><a href="#watchList">Watch List</a></li>
             <li><a href="#alreadyWatched">Have-Watched List</a></li>
             <li><a id="logout">Logout</a></li>
+            <li><a href="#aboutPage">About</a></li>
           </ul>
         </div>
         <!-- /navbar -->
@@ -144,6 +147,7 @@
             <li><a href="#watchList" class="ui-btn-active">Watch List</a></li>
             <li><a href="#alreadyWatched">Have-Watched List</a></li>
             <li><a id="logoutWatch">Logout</a></li>
+            <li><a href="#aboutPage">About</a></li>
           </ul>
         </div>
         <!-- /navbar -->
@@ -154,9 +158,7 @@
             <img src="/images/moviemates_logo_people.svg" alt="MovieMates logo">
           </div>
         </center>
-        <div class="ui-field-contain">
-          <fieldset data-role="controlgroup" id="watchListPage">
-          </fieldset>
+        <div id="watchListPage">
         </div>
       </div>
     </div>
@@ -171,6 +173,7 @@
             <li><a href="#watchList">Watch List</a></li>
             <li><a href="#alreadyWatched" class="ui-btn-active">Have-Watched List</a></li>
             <li><a id="logoutWatched">Logout</a></li>
+            <li><a href="#aboutPage">About</a></li>
           </ul>
         </div>
         <!-- /navbar -->
@@ -182,10 +185,34 @@
             <img src="/images/moviemates_logo_people.svg" alt="MovieMates logo">
           </div>
         </center>
-        <div class="ui-field-contain">
-          <fieldset data-role="controlgroup" id="haveWatchedPage">
-          </fieldset>
+        <div id="haveWatchedPage">
         </div>
+      </div>
+    </div>
+
+    <!-- About Page -->
+    <div data-role="page" id="aboutPage">
+      <div data-role="header">
+        <!-- nav bar -->
+        <div data-role="navbar">
+          <ul>
+            <li><a href="#homePageLogin">Home</a></li>
+            <li><a href="#watchList">Watch List</a></li>
+            <li><a href="#alreadyWatched">Have-Watched List</a></li>
+            <li><a id="logoutWatched">Logout</a></li>
+            <li><a href="#aboutPage" class="ui-btn-active">About</a></li>
+          </ul>
+        </div>
+        <!-- /navbar -->
+      </div>
+      <div data-role="content">
+        <center>
+          <div class="logo">
+            <img src="/images/moviemates_logo_people.svg" alt="MovieMates logo">
+          </div>
+          <h2>About MovieMates</h2>
+          <h1>Contact Us</h1>
+        </center>
       </div>
     </div>
 
