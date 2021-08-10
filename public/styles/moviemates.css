@@ -68,3 +68,11 @@ ul.searchList {
   z-index: 9;
   background: white;
 }
+
+.imdb_Img {
+  max-width: 100%;
+  max-height: 100%;
+  margin: auto;
+  display: block;
+  /*object-fit: contain;*/
+}

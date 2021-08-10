@@ -11,3 +11,5 @@ COMPLETED TASKS
 // change matching field in firestore doc (ie watched: true --> watched = false)
 // if user selects "delete," remove from any list (and users movie list?)
 // count of movies on lists
+// display movie info on click? maybe "i" button next to each one?
+// build hidden div for every movie with id of info_ + imdbID

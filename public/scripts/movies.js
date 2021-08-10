@@ -121,7 +121,19 @@ async function updateList(listID) {
 				html += '<input type="checkbox" id="chbx_' + yourNewData.imdbID +
 					'" value ="" onClick="checkboxListener(\'watchListPage\')">';
 				html += titleForList;
-				html += '</label></li>';
+				html += '</label>'
+				html += '<img src="/images/Info_simple_bw.svg" class="info_img" onClick="showInfo(\'' + yourNewData.imdbID + '\')">';
+				html += '</li>';
+				// hidden div
+				html += '<div class= "infoBox" id="info_' + yourNewData.imdbID + '">';
+				html += '<center><p>';
+				html += '<img src ="' + yourNewData.Poster + '" class="imdb_Img">';
+				html += '<br>' + yourNewData.Title;
+				html += '<br>' + yourNewData.Year;
+				html += '</p>';
+				html += '<button type="button" onClick="hideInfo(\'' + yourNewData.imdbID + '\')">Close</button>';
+				html += '</center>';
+				html += '</div>';
 			}
 			html += '<button type="button" id="addBtn" disabled>Watched!</button>';
 			html += '<button type="button" id="deleteBtn" disabled>Delete</button>';
@@ -170,7 +182,9 @@ async function updateList(listID) {
 				// hidden div
 				html += '<div class= "infoBox" id="info_' + yourNewData.imdbID + '">';
 				html += '<center><p>';
-				html += yourNewData.imdbID;
+				html += '<img src ="' + yourNewData.Poster + '" class="imdb_Img">';
+				html += '<br>' + yourNewData.Title;
+				html += '<br>' + yourNewData.Year;
 				html += '</p>';
 				html += '<button type="button" onClick="hideInfo(\'' + yourNewData.imdbID + '\')">Close</button>';
 				html += '</center>';
@@ -189,7 +203,7 @@ async function updateList(listID) {
 				console.log('welcome');
 				deleteFromList('haveWatchedPage');
 			});
-			//$('button').button();
+			//$('button').button("refresh");
 			break;
 		default:
 			console.log('uh oh');
@@ -288,8 +302,7 @@ function sleep(ms) {
 
 // TODO:
 // sort lists
-// display movie info on click? maybe "i" button next to each one?
-// build hidden div for every movie with id of info_ + imdbID
-//
+// fix css for movie info image
+// fix css for movie infoBox
 // email for support
 // move logout button?
