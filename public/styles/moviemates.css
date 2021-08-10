@@ -39,3 +39,32 @@ ul.searchList {
   list-style-type: none;
   padding: 0;
 }
+
+#haveWatchedPage * li {
+  display: flex;
+  justify-content: space-around;
+}
+
+/*.checkbox-inline {
+  display: inline-block;
+}*/
+.info_img {
+  height: 20px;
+  width: 20px;
+}
+
+.infoBox {
+  display: none;
+  position: fixed;
+  padding-top: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-bottom: 15px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+  border: 3px solid #f1f1f1;
+  z-index: 9;
+  background: white;
+}

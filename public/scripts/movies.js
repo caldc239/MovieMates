@@ -108,6 +108,9 @@ async function updateList(listID) {
 
 			var html = '';
 			html += '<div><h2>Watch List</h2></div>';
+			html += '<p>Total movies to watch: ';
+			html += yourData.length;
+			html += '</p>';
 			for (var doc of yourData) {
 				var documentReference = db.collection('movies').doc(doc.movie);
 				var yourNewData = await documentReference.get().then((data) => {
@@ -122,9 +125,6 @@ async function updateList(listID) {
 			}
 			html += '<button type="button" id="addBtn" disabled>Watched!</button>';
 			html += '<button type="button" id="deleteBtn" disabled>Delete</button>';
-			html += '<p>Total movies to watch: ';
-			html += yourData.length;
-			html += '</p>';
 			$('#' + listID).html(html);
 			// listen for user to click add or delete buttons and call appropriate function
 			$('#addBtn').click(function(e) {
@@ -150,6 +150,9 @@ async function updateList(listID) {
 
 			var html = '';
 			html += '<div><h2>Have-Watched List</h2></div>';
+			html += '<p>Total movies you have watched: ';
+			html += yourData.length;
+			html += '</p>';
 			for (var doc of yourData) {
 				// console.log(doc);
 				var documentReference = db.collection('movies').doc(doc.movie);
@@ -161,15 +164,20 @@ async function updateList(listID) {
 				html += '<input type="checkbox" id="chbx_' + yourNewData.imdbID +
 					'" value ="" onClick="checkboxListener(\'haveWatchedPage\')">';
 				html += titleForList;
-				html += '</label>';
-				//html += '<img src="/images/Info_simple_bw.svg" class="info_img">';
+				html += '</label>'
+				html += '<img src="/images/Info_simple_bw.svg" class="info_img" onClick="showInfo(\'' + yourNewData.imdbID + '\')">';
 				html += '</li>';
+				// hidden div
+				html += '<div class= "infoBox" id="info_' + yourNewData.imdbID + '">';
+				html += '<center><p>';
+				html += yourNewData.imdbID;
+				html += '</p>';
+				html += '<button type="button" onClick="hideInfo(\'' + yourNewData.imdbID + '\')">Close</button>';
+				html += '</center>';
+				html += '</div>';
 			}
 			html += '<button type="button" id="watchBtn" disabled>Move to watch list</button>';
 			html += '<button type="button" id="dltBtn" disabled>Delete</button>';
-			html += '<p>Total movies you have watched: ';
-			html += yourData.length;
-			html += '</p>';
 			$('#' + listID).html(html);
 			// listen for user to click move or dlt buttons and call appropriate function
 			$('#watchBtn').click(function(e) {
@@ -181,6 +189,7 @@ async function updateList(listID) {
 				console.log('welcome');
 				deleteFromList('haveWatchedPage');
 			});
+			//$('button').button();
 			break;
 		default:
 			console.log('uh oh');
@@ -264,6 +273,14 @@ async function deleteFromList(listID) {
 	}
 }
 
+function showInfo(imdbID) {
+	$('#info_' + imdbID).show()
+}
+
+function hideInfo(imdbID) {
+	$('#info_' + imdbID).hide()
+}
+
 // sleep() pauses a function for a set amount of ms
 function sleep(ms) {
 	return new Promise(resolve => setTimeout(resolve, ms));
@@ -272,5 +289,7 @@ function sleep(ms) {
 // TODO:
 // sort lists
 // display movie info on click? maybe "i" button next to each one?
+// build hidden div for every movie with id of info_ + imdbID
+//
 // email for support
 // move logout button?
