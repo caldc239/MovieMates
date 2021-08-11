@@ -147,6 +147,12 @@ async function updateList(listID) {
 				e.preventDefault();
 				deleteFromList('watchListPage');
 			});
+			$(document).mouseup(function(e) {
+				var container = $('.infoBox');
+				if (!container.is(e.target) && container.has(e.target).length === 0) {
+					container.hide();
+				}
+			});
 			break;
 
 		case "haveWatchedPage":
@@ -202,6 +208,12 @@ async function updateList(listID) {
 				e.preventDefault();
 				console.log('welcome');
 				deleteFromList('haveWatchedPage');
+			});
+			$(document).mouseup(function(e) {
+				var container = $('.infoBox');
+				if (!container.is(e.target) && container.has(e.target).length === 0) {
+					container.hide();
+				}
 			});
 			//$('button').button("refresh");
 			break;
