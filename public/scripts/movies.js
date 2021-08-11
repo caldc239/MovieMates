@@ -122,7 +122,7 @@ async function updateList(listID) {
 					'" value ="" onClick="checkboxListener(\'watchListPage\')">';
 				html += titleForList;
 				html += '</label>'
-				html += '<img src="/images/Info_simple_bw.svg" class="info_img" onClick="showInfo(\'' + yourNewData.imdbID + '\')">';
+				html += '<img src="/images/Info_Simple_bw.svg" alt="info logo" class="info_img" onClick="showInfo(\'' + yourNewData.imdbID + '\')">';
 				html += '</li>';
 				// hidden div
 				html += '<div class= "infoBox" id="info_' + yourNewData.imdbID + '">';
@@ -183,7 +183,7 @@ async function updateList(listID) {
 					'" value ="" onClick="checkboxListener(\'haveWatchedPage\')">';
 				html += titleForList;
 				html += '</label>'
-				html += '<img src="/images/Info_simple_bw.svg" class="info_img" onClick="showInfo(\'' + yourNewData.imdbID + '\')">';
+				html += '<img src="/images/Info_Simple_bw.svg" alt="info logo" class="info_img" onClick="showInfo(\'' + yourNewData.imdbID + '\')">';
 				html += '</li>';
 				// hidden div
 				html += '<div class= "infoBox" id="info_' + yourNewData.imdbID + '">';
