@@ -65,20 +65,25 @@ async function updateSearchList(response) {
 		// iterate through search responses to find matching imdbID
 		for (var i = 0; i < searchResults.Search.length; i++) {
 			if (searchResults.Search[i].imdbID == movieID) {
-				db.collection('movies').doc(movieID).set(searchResults.Search[i]);
+				await db.collection('movies').doc(movieID).set(searchResults.Search[i]);
 				// add movieID to user's watch list collection
-				const usersRef = db.collection('users').doc(auth.currentUser.uid);
+				/*const usersRef = db.collection('users').doc(auth.currentUser.uid);
 				const doc = await usersRef.get().then((doc) => {
 					return doc;
 				});
-				if (!doc.exists) {
-					db.collection('users').doc(auth.currentUser.uid).collection('movieList').doc(movieID).set({
-						movie: movieID,
-						watched: false
-					});
-				} else {
+				if (!doc.exists) {*/
+				await db.collection('users').doc(auth.currentUser.uid).set({
+					id: auth.currentUser.uid
+				}, {
+					merge: true
+				});
+				await db.collection('users').doc(auth.currentUser.uid).collection('movieList').doc(movieID).set({
+					movie: movieID,
+					watched: false
+				});
+				/*} else {
 					console.log('hi');
-				}
+				}*/
 				// clear searchResponse list and search bar
 				$('#searchResponse').empty();
 				$('#addToList').val('');
@@ -137,6 +142,9 @@ async function updateList(listID) {
 			}
 			html += '<button type="button" id="addBtn" disabled>Watched!</button>';
 			html += '<button type="button" id="deleteBtn" disabled>Delete</button>';
+			html += '<input type="text" value="moviemates-318318.web.app/?uid=' + auth.currentUser.uid + '"id="shareLink" readonly>';
+			html += '<button onClick="copyShare()">Copy link</button>';
+			//html += '<br><br><center><a href="?uid=' + auth.currentUser.uid + '">Share with a friend</a></center>';
 			$('#' + listID).html(html);
 			// listen for user to click add or delete buttons and call appropriate function
 			$('#addBtn').click(function(e) {
@@ -215,7 +223,62 @@ async function updateList(listID) {
 					container.hide();
 				}
 			});
-			//$('button').button("refresh");
+			break;
+		case "sharedListPage":
+			// iterate through user's movie list and get each imdbID
+			if (sharedUID == undefined) return;
+
+			var usersMovieRef = db.collection('users').doc(sharedUID).collection('movieList');
+			var yourData = await usersMovieRef.where("watched", "==", false).get().then((snapshot) => {
+				var temp = [];
+				var response = snapshot.forEach((doc) => {
+					temp.push(doc.data());
+				});
+				return temp;
+			});
+
+			var html = '';
+			html += '<div><h2>Your Friend\'s Watch List</h2></div>';
+			html += '<p>Total movies to watch: ';
+			html += yourData.length;
+			html += '</p>';
+			for (var doc of yourData) {
+				var documentReference = db.collection('movies').doc(doc.movie);
+				var yourNewData = await documentReference.get().then((data) => {
+					return data.data();
+				});
+				titleForList = yourNewData.Title;
+				html += '<li><label class="checkbox-inline">';
+				html += '<input type="checkbox" id="chbx_' + yourNewData.imdbID +
+					'" value ="" onClick="checkboxListener(\'sharedListPage\')">';
+				html += titleForList;
+				html += '</label>'
+				html += '<img src="/images/Info_Simple_bw.svg" alt="info logo" class="info_img" onClick="showInfo(\'' + yourNewData.imdbID + '\')">';
+				html += '</li>';
+				// hidden div
+				html += '<div class= "infoBox" id="info_' + yourNewData.imdbID + '">';
+				html += '<center><p>';
+				html += '<img src ="' + yourNewData.Poster + '" class="imdb_Img">';
+				html += '<br>' + yourNewData.Title;
+				html += '<br>' + yourNewData.Year;
+				html += '</p>';
+				html += '<button type="button" onClick="hideInfo(\'' + yourNewData.imdbID + '\')">Close</button>';
+				html += '</center>';
+				html += '</div>';
+			}
+			html += '<button type="button" id="sharedAddBtn" disabled>Add to my list</button>';
+			$('#' + listID).html(html);
+			// listen for user to click add or delete buttons and call appropriate function
+			$('#sharedAddBtn').click(function(e) {
+				e.preventDefault();
+				addToWatchList('sharedListPage');
+			});
+			$(document).mouseup(function(e) {
+				var container = $('.infoBox');
+				if (!container.is(e.target) && container.has(e.target).length === 0) {
+					container.hide();
+				}
+			});
 			break;
 		default:
 			console.log('uh oh');
@@ -228,7 +291,6 @@ function checkboxCheck(listID) {
 	// verify which list in which user clicked or checked desired movie(s)
 	$('#' + listID + ' * input[type="checkbox"]').each(function() {
 		if ($(this).prop('checked')) {
-			console.log('hi');
 			// extract chbxID (imdbID)
 			var chbxID = $(this).attr('id').substring(5);
 			chbxArray.push(chbxID);
@@ -251,6 +313,9 @@ function checkboxListener(listID) {
 		case "haveWatchedPage":
 			$('#watchBtn').prop('disabled', (list.length == 0));
 			$('#dltBtn').prop('disabled', (list.length == 0));
+			break;
+		case "sharedListPage":
+			$('#sharedAddBtn').prop('disabled', (list.length == 0));
 			break;
 	}
 }
@@ -299,6 +364,19 @@ async function deleteFromList(listID) {
 	}
 }
 
+// addToWatchList() adds shared movies to a user's list
+async function addToWatchList(listID) {
+	// get array of checked movies
+	var temp = checkboxCheck(listID);
+	// set "watched" field in doc to "false"
+	for (var i = 0; i < temp.length; i++) {
+		await db.collection('users').doc(auth.currentUser.uid).collection('movieList').doc(temp[i]).set({
+			movie: temp[i],
+			watched: false
+		});
+	}
+}
+
 function showInfo(imdbID) {
 	$('#info_' + imdbID).show()
 }
@@ -312,9 +390,36 @@ function sleep(ms) {
 	return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+// get uid from current url
+function GetURLParameter(sParam) {
+	var sPageURL = window.location.search.substring(1);
+	var sURLVariables = sPageURL.split('&');
+	for (var i = 0; i < sURLVariables.length; i++) {
+		var sParameterName = sURLVariables[i].split('=');
+		if (sParameterName[0] == sParam) {
+			return sParameterName[1];
+		}
+	}
+	return undefined;
+}
+
+var sharedUID = GetURLParameter("uid");
+
+function copyShare() {
+	var copyText = $('#shareLink');
+	console.log(copyText);
+	//var selectionStart = copyText[0].selectionStart;
+	//var selectionEnd = copyText[0].selectionEnd;
+	// Select the link to copy
+	copyText.select();
+	//copyText[0].setSelectionRange(selectionStart, selectionEnd);
+	// Copy text in text field
+	document.execCommand("copy");
+	// Tell user it's copied
+	alert("Link copied to clipboard!");
+}
+
 // TODO:
 // sort lists
-// fix css for movie info image
-// fix css for movie infoBox
-// email for support
+// add toast for added to watch list
 // move logout button?

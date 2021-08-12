@@ -1,12 +1,27 @@
 // authentication status listener
-auth.onAuthStateChanged(user => {
+auth.onAuthStateChanged(async function(user) {
 	if (user) {
+		console.log(sharedUID);
 		console.log('user logged in: ', user);
-		$(':mobile-pagecontainer').pagecontainer('change', '#homePageLogin');
+		//var doc = await db.collection('users').doc(sharedUID).get();
+		const usersRef = db.collection('users').doc(sharedUID);
+		const doc = await usersRef.get().then((doc) => {
+			return doc;
+		});
+		console.log(doc);
+		console.log(doc.exists);
+		if (doc.exists) {
+			console.log('whatever');
+			$(':mobile-pagecontainer').pagecontainer('change', '#sharedList');
+		} else {
+			sharedUID = undefined;
+			$(':mobile-pagecontainer').pagecontainer('change', '#homePageLogin');
+		}
 		// onSnapshot listens for changes in the database & calls new updateLists()
 		db.collection('users').doc(auth.currentUser.uid).collection('movieList').onSnapshot(snapshot => {
 			updateList('watchListPage');
 			updateList('haveWatchedPage');
+			updateList('sharedListPage');
 		});
 	} else {
 		console.log('user logged out');

@@ -4,7 +4,7 @@
   <head>
     <!-- Created by Cassaundra Caldwell
       Date Created: 29 June 2021
-      Date Modified:  9 August 2021
+      Date Modified:  11 August 2021
       Description: MovieMates is a web app designed to track movies and TV shows
       a user wants to watch or has watched, provide basic info about them, and
       provide users with the ability to share their lists with friends. -->
@@ -21,7 +21,6 @@
     <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js" integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
 
-
   </head>
 
   <body>
@@ -35,6 +34,7 @@
           </div>
           <h3>Already a member? <a href="#loginPage">Login</a></h3>
           <h3>Need an account? <a href="#signupPage">Sign Up</a></h3>
+          <h3>About MovieMates <a href="#aboutPage">Learn More</a></h3>
         </center>
       </div>
     </div>
@@ -116,7 +116,7 @@
             <li><a href="#watchList">Watch List</a></li>
             <li><a href="#alreadyWatched">Have-Watched List</a></li>
             <li><a id="logout">Logout</a></li>
-            <li><a href="#aboutPage">About</a></li>
+            <li><a href="#contactPage">Contact</a></li>
           </ul>
         </div>
         <!-- /navbar -->
@@ -147,7 +147,7 @@
             <li><a href="#watchList" class="ui-btn-active">Watch List</a></li>
             <li><a href="#alreadyWatched">Have-Watched List</a></li>
             <li><a id="logoutWatch">Logout</a></li>
-            <li><a href="#aboutPage">About</a></li>
+            <li><a href="#contactPage">Contact</a></li>
           </ul>
         </div>
         <!-- /navbar -->
@@ -173,7 +173,7 @@
             <li><a href="#watchList">Watch List</a></li>
             <li><a href="#alreadyWatched" class="ui-btn-active">Have-Watched List</a></li>
             <li><a id="logoutWatched">Logout</a></li>
-            <li><a href="#aboutPage">About</a></li>
+            <li><a href="#contactPage">Contact</a></li>
           </ul>
         </div>
         <!-- /navbar -->
@@ -190,16 +190,41 @@
       </div>
     </div>
 
-    <!-- About Page -->
-    <div data-role="page" id="aboutPage">
+    <!-- Contact Page -->
+    <div data-role="page" id="contactPage">
       <div data-role="header">
-        <!-- nav bar -->
+        <!-- navbar -->
         <div data-role="navbar">
           <ul>
             <li><a href="#homePageLogin">Home</a></li>
             <li><a href="#watchList">Watch List</a></li>
             <li><a href="#alreadyWatched">Have-Watched List</a></li>
             <li><a id="logoutWatched">Logout</a></li>
+            <li><a href="#contactPage" class="ui-btn-active">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+      <!-- /navbar -->
+      <div data-role="content">
+        <center>
+          <div class="logo">
+            <img src="/images/moviemates_logo_people.svg" alt="MovieMates logo">
+          </div>
+          <h2>Contact Us</h2>
+          <p>Have a question, comment, or suggestion? Drop us an email, we'll
+            get back to you ASAP</p>
+          <a href="mailto: moviematesdev@gmail.com">Send Email</a>
+        </center>
+      </div>
+    </div>
+
+    <!-- About Page -->
+    <div data-role="page" id="aboutPage">
+      <div data-role="header">
+        <!-- nav bar -->
+        <div data-role="navbar">
+          <ul>
+            <li><a href="#homePageNotLogin">Home</a></li>
             <li><a href="#aboutPage" class="ui-btn-active">About</a></li>
           </ul>
         </div>
@@ -211,10 +236,45 @@
             <img src="/images/moviemates_logo_people.svg" alt="MovieMates logo">
           </div>
           <h2>About MovieMates</h2>
-          <h1>Contact Us</h1>
+          <p>Search for movies from the Home page and click on a result to add
+            it to your watch list.
+            <br><br>View your watch list from the Watch List page, and check each
+            movie as you watch it to add it to your Have-Watched page.
+            <br><br>View movie info or delete the movie from either list.
+          </p>
         </center>
       </div>
     </div>
+
+    <!-- Shared Page -->
+    <div data-role="page" id="sharedList">
+      <!-- header -->
+      <div data-role="header">
+        <!-- nav bar -->
+        <div data-role="navbar">
+          <ul>
+            <li><a href="#homePageLogin">Home</a></li>
+            <li><a href="#watchList">Watch List</a></li>
+            <li><a href="#alreadyWatched">Have-Watched List</a></li>
+            <li><a id="logout">Logout</a></li>
+            <li><a href="#contactPage">Contact</a></li>
+          </ul>
+        </div>
+        <!-- /navbar -->
+      </div>
+      <!-- /header -->
+      <div data-role="content">
+        <center>
+          <div class="logo">
+            <img src="/images/moviemates_logo_people.svg" alt="MovieMates logo">
+          </div>
+          <h2>Movie List</h2>
+        </center>
+      </div>
+      <div id="sharedListPage">
+      </div>
+    </div>
+
 
 
     <!-- The core Firebase JS SDK is always required and must be listed first -->
