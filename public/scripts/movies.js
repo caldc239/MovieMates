@@ -110,7 +110,7 @@ async function updateList(listID) {
 				});
 				return temp;
 			});
-
+			// iterate through movie list to match user's movieID to movie in database to get the title
 			var html = '';
 			html += '<div><h2>Watch List</h2></div>';
 			html += '<p>Total movies to watch: ';
@@ -122,6 +122,8 @@ async function updateList(listID) {
 					return data.data();
 				});
 				titleForList = yourNewData.Title;
+
+				// displays titles in checkbox list 
 				html += '<li><label class="checkbox-inline">';
 				html += '<input type="checkbox" id="chbx_' + yourNewData.imdbID +
 					'" value ="" onClick="checkboxListener(\'watchListPage\')">';
@@ -129,6 +131,7 @@ async function updateList(listID) {
 				html += '</label>'
 				html += '<img src="/images/Info_Simple_bw.svg" alt="info logo" class="info_img" onClick="showInfo(\'' + yourNewData.imdbID + '\')">';
 				html += '</li>';
+
 				// hidden div
 				html += '<div class= "infoBox" id="info_' + yourNewData.imdbID + '">';
 				html += '<center><p>';
@@ -144,8 +147,8 @@ async function updateList(listID) {
 			html += '<button type="button" id="deleteBtn" disabled>Delete</button>';
 			html += '<input type="text" value="moviemates-318318.web.app/?uid=' + auth.currentUser.uid + '"id="shareLink" readonly>';
 			html += '<button onClick="copyShare()">Copy link</button>';
-			//html += '<br><br><center><a href="?uid=' + auth.currentUser.uid + '">Share with a friend</a></center>';
 			$('#' + listID).html(html);
+
 			// listen for user to click add or delete buttons and call appropriate function
 			$('#addBtn').click(function(e) {
 				e.preventDefault();

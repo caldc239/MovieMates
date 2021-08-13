@@ -12,7 +12,8 @@ COMPLETED TASKS
 // if user selects "delete," remove from any list (and users movie list?)
 // count of movies on lists
 // display movie info on click? maybe "i" button next to each one?
-// build hidden div for every movie with id of info_ + imdbID// fix css for movie info image
+// build hidden div for every movie with id of info_ + imdbID
+// fix css for movie info image
 // fix css for movie infoBox
 // email for support
 // share lists
