@@ -56,7 +56,7 @@ $(document).on('click', '#signupGoogle, #signinGoogle', ((e) => {
 }));
 
 // Logout
-$(document).on('click', '#logout, #logoutWatch, #logoutWatched, #logoutShared, #logoutAbout'((e) => {
+$(document).on('click', '#logout, #logoutWatch, #logoutWatched, #logoutShared, #logoutAbout', ((e) => {
 	e.preventDefault();
 	auth.signOut().then(() => {
 		console.log('user signed out');
