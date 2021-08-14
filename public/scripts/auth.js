@@ -3,7 +3,6 @@ auth.onAuthStateChanged(async function(user) {
 	if (user) {
 		console.log(sharedUID);
 		console.log('user logged in: ', user);
-		//var doc = await db.collection('users').doc(sharedUID).get();
 		const usersRef = db.collection('users').doc(sharedUID);
 		const doc = await usersRef.get().then((doc) => {
 			return doc;
@@ -11,7 +10,6 @@ auth.onAuthStateChanged(async function(user) {
 		console.log(doc);
 		console.log(doc.exists);
 		if (doc.exists) {
-			console.log('whatever');
 			$(':mobile-pagecontainer').pagecontainer('change', '#sharedList');
 		} else {
 			sharedUID = undefined;

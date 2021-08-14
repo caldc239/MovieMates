@@ -74,6 +74,7 @@ async function updateSearchList(response) {
 					watched: false
 				});
 				// clear searchResponse list and search bar
+				alert('Movie added to watch list!');
 				$('#searchResponse').empty();
 				$('#addToList').val('');
 				// call updateList() function and pass watchListPage as the parameter
