@@ -1,6 +1,5 @@
 //global variables
 var searchResults;
-var titleForList;
 
 //pass user input to function movieSearch to return movie options
 function movieSearch(title, callback) {
@@ -92,8 +91,8 @@ async function updateList(listID) {
 	switch (listID) {
 		case "watchListPage":
 			// iterate through user's movie list and get each imdbID
-			var usersMovieRef = db.collection('users').doc(auth.currentUser.uid).collection('movieList');
-			var yourData = await usersMovieRef.where("watched", "==", false).get().then((snapshot) => {
+			var usersMovieRefWatch = db.collection('users').doc(auth.currentUser.uid).collection('movieList');
+			var watchData = await usersMovieRefWatch.where("watched", "==", false).get().then((snapshot) => {
 				var temp = [];
 				var response = snapshot.forEach((doc) => {
 					temp.push(doc.data());
@@ -104,41 +103,40 @@ async function updateList(listID) {
 			var html = '';
 			html += '<div><h2>Watch List</h2></div>';
 			html += '<p>Total movies to watch: ';
-			html += yourData.length;
+			html += watchData.length;
 			html += '</p>';
-			for (var doc of yourData) {
+			for (var doc of watchData) {
 				var documentReference = db.collection('movies').doc(doc.movie);
-				var yourNewData = await documentReference.get().then((data) => {
+				var newWatchData = await documentReference.get().then((data) => {
 					return data.data();
 				});
-				titleForList = yourNewData.Title;
 
 				// displays titles in checkbox list
 				html += '<li><label class="checkbox-inline">';
-				html += '<input type="checkbox" id="chbx_' + yourNewData.imdbID +
+				html += '<input type="checkbox" id="chbx_' + newWatchData.imdbID +
 					'" value ="" onClick="checkboxListener(\'watchListPage\')">';
-				html += titleForList;
-				html += '</label>'
-				html += '<img src="/images/Info_Simple_bw.svg" alt="info logo" class="info_img" onClick="showInfo(\'' + yourNewData.imdbID + '\')">';
+				html += newWatchData.Title;
+				html += '</label>';
+				html += '<img src="/images/Info_Simple_bw.svg" alt="info logo" class="info_img" onClick="showInfo(\'' + newWatchData.imdbID + '\')">';
 				html += '</li>';
 
 				// hidden div
-				html += '<div class= "infoBox" id="info_' + yourNewData.imdbID + '">';
+				html += '<div class= "infoBox" id="info_' + newWatchData.imdbID + '">';
 				html += '<center><p>';
-				html += '<img src ="' + yourNewData.Poster + '" class="imdb_Img">';
-				html += '<br>' + yourNewData.Title;
-				html += '<br>' + yourNewData.Year;
+				html += '<img src ="' + newWatchData.Poster + '" class="imdb_Img">';
+				html += '<br>' + newWatchData.Title;
+				html += '<br>' + newWatchData.Year;
 				html += '</p>';
-				html += '<button type="button" onClick="hideInfo(\'' + yourNewData.imdbID + '\')">Close</button>';
+				html += '<button type="button" onClick="hideInfo(\'' + newWatchData.imdbID + '\')">Close</button>';
 				html += '</center>';
 				html += '</div>';
 			}
-			html += '<button type="button" id="addBtn" disabled>Watched!</button>';
-			html += '<button type="button" id="deleteBtn" disabled>Delete</button>';
+			html += '<button type="button" id="addBtn" class="ui-btn ui-btn-inline" disabled>Watched!</button>';
+			html += '<button type="button" id="deleteBtn" class="ui-btn ui-btn-inline" disabled>Delete</button>';
 			html += '<h3>Share your list with friends!</h3>';
 			html += '<p>Copy the link below:</p>';
 			html += '<br><input type="text" value="moviemates-318318.web.app/?uid=' + auth.currentUser.uid + '"id="shareLink" readonly>';
-			html += '<button onClick="copyShare()">Copy link</button>';
+			html += '<button class="ui-btn ui-btn-inline" onClick="copyShare()">Copy link</button>';
 			$('#' + listID).html(html);
 
 			// listen for user to click add or delete buttons and call appropriate function
@@ -160,8 +158,8 @@ async function updateList(listID) {
 
 		case "haveWatchedPage":
 			// iterate through user's movie list and get each imdbID
-			var usersMovieRef = db.collection('users').doc(auth.currentUser.uid).collection('movieList');
-			var yourData = await usersMovieRef.where("watched", "==", true).get().then((snapshot) => {
+			var usersMovieRefWatched = db.collection('users').doc(auth.currentUser.uid).collection('movieList');
+			var watchedData = await usersMovieRefWatched.where("watched", "==", true).get().then((snapshot) => {
 				var temp = [];
 				var response = snapshot.forEach((doc) => {
 					temp.push(doc.data());
@@ -172,35 +170,34 @@ async function updateList(listID) {
 			var html = '';
 			html += '<div><h2>Have-Watched List</h2></div>';
 			html += '<p>Total movies you have watched: ';
-			html += yourData.length;
+			html += watchedData.length;
 			html += '</p>';
-			for (var doc of yourData) {
+			for (var doc of watchedData) {
 				// console.log(doc);
-				var documentReference = db.collection('movies').doc(doc.movie);
-				var yourNewData = await documentReference.get().then((data) => {
+				var docReference = db.collection('movies').doc(doc.movie);
+				var newWatchedData = await docReference.get().then((data) => {
 					return data.data();
 				});
-				titleForList = yourNewData.Title;
 				html += '<li><label class="checkbox-inline">';
-				html += '<input type="checkbox" id="chbx_' + yourNewData.imdbID +
+				html += '<input type="checkbox" id="chbx_' + newWatchedData.imdbID +
 					'" value ="" onClick="checkboxListener(\'haveWatchedPage\')">';
-				html += titleForList;
-				html += '</label>'
-				html += '<img src="/images/Info_Simple_bw.svg" alt="info logo" class="info_img" onClick="showInfo(\'' + yourNewData.imdbID + '\')">';
+				html += newWatchedData.Title;
+				html += '</label>';
+				html += '<img src="/images/Info_Simple_bw.svg" alt="info logo" class="info_img" onClick="showInfo(\'' + newWatchedData.imdbID + '\')">';
 				html += '</li>';
 				// hidden div
-				html += '<div class= "infoBox" id="info_' + yourNewData.imdbID + '">';
+				html += '<div class= "infoBox" id="info_' + newWatchedData.imdbID + '">';
 				html += '<center><p>';
-				html += '<img src ="' + yourNewData.Poster + '" class="imdb_Img">';
-				html += '<br>' + yourNewData.Title;
-				html += '<br>' + yourNewData.Year;
+				html += '<img src ="' + newWatchedData.Poster + '" class="imdb_Img">';
+				html += '<br>' + newWatchedData.Title;
+				html += '<br>' + newWatchedData.Year;
 				html += '</p>';
-				html += '<button type="button" onClick="hideInfo(\'' + yourNewData.imdbID + '\')">Close</button>';
+				html += '<button type="button" onClick="hideInfo(\'' + newWatchedData.imdbID + '\')">Close</button>';
 				html += '</center>';
 				html += '</div>';
 			}
-			html += '<button type="button" id="watchBtn" disabled>Move to watch list</button>';
-			html += '<button type="button" id="dltBtn" disabled>Delete</button>';
+			html += '<button type="button" id="watchBtn" class="ui-btn ui-btn-inline" disabled>Move to watch list</button>';
+			html += '<button type="button" id="dltBtn" class="ui-btn ui-btn-inline" disabled>Delete</button>';
 			$('#' + listID).html(html);
 			// listen for user to click move or dlt buttons and call appropriate function
 			$('#watchBtn').click(function(e) {
@@ -223,8 +220,8 @@ async function updateList(listID) {
 			// iterate through user's movie list and get each imdbID
 			if (sharedUID == undefined) return;
 
-			var usersMovieRef = db.collection('users').doc(sharedUID).collection('movieList');
-			var yourData = await usersMovieRef.where("watched", "==", false).get().then((snapshot) => {
+			var usersMovieRefShared = db.collection('users').doc(sharedUID).collection('movieList');
+			var sharedData = await usersMovieRefShared.where("watched", "==", false).get().then((snapshot) => {
 				var temp = [];
 				var response = snapshot.forEach((doc) => {
 					temp.push(doc.data());
@@ -235,33 +232,32 @@ async function updateList(listID) {
 			var html = '';
 			html += '<div><h2>Your Friend\'s Watch List</h2></div>';
 			html += '<p>Total movies to watch: ';
-			html += yourData.length;
+			html += sharedData.length;
 			html += '</p>';
-			for (var doc of yourData) {
-				var documentReference = db.collection('movies').doc(doc.movie);
-				var yourNewData = await documentReference.get().then((data) => {
+			for (var doc of sharedData) {
+				var docRef = db.collection('movies').doc(doc.movie);
+				var newSharedData = await docRef.get().then((data) => {
 					return data.data();
 				});
-				titleForList = yourNewData.Title;
 				html += '<li><label class="checkbox-inline">';
-				html += '<input type="checkbox" id="chbx_' + yourNewData.imdbID +
+				html += '<input type="checkbox" id="chbx_' + newSharedData.imdbID +
 					'" value ="" onClick="checkboxListener(\'sharedListPage\')">';
-				html += titleForList;
-				html += '</label>'
-				html += '<img src="/images/Info_Simple_bw.svg" alt="info logo" class="info_img" onClick="showInfo(\'' + yourNewData.imdbID + '\')">';
+				html += newSharedData.Title;
+				html += '</label>';
+				html += '<img src="/images/Info_Simple_bw.svg" alt="info logo" class="info_img" onClick="showInfo(\'' + newSharedData.imdbID + '\')">';
 				html += '</li>';
 				// hidden div
-				html += '<div class= "infoBox" id="info_' + yourNewData.imdbID + '">';
+				html += '<div class= "infoBox" id="info_' + newSharedData.imdbID + '">';
 				html += '<center><p>';
-				html += '<img src ="' + yourNewData.Poster + '" class="imdb_Img">';
-				html += '<br>' + yourNewData.Title;
-				html += '<br>' + yourNewData.Year;
+				html += '<img src ="' + newSharedData.Poster + '" class="imdb_Img">';
+				html += '<br>' + newSharedData.Title;
+				html += '<br>' + newSharedData.Year;
 				html += '</p>';
-				html += '<button type="button" onClick="hideInfo(\'' + yourNewData.imdbID + '\')">Close</button>';
+				html += '<button type="button" onClick="hideInfo(\'' + newSharedData.imdbID + '\')">Close</button>';
 				html += '</center>';
 				html += '</div>';
 			}
-			html += '<button type="button" id="sharedAddBtn" disabled>Add to my list</button>';
+			html += '<button type="button" id="sharedAddBtn" class="ui-btn ui-btn-inline" disabled>Add to my list</button>';
 			$('#' + listID).html(html);
 			// listen for user to click add or delete buttons and call appropriate function
 			$('#sharedAddBtn').click(function(e) {
@@ -373,11 +369,11 @@ async function addToWatchList(listID) {
 }
 
 function showInfo(imdbID) {
-	$('#info_' + imdbID).show()
+	$('#info_' + imdbID).show();
 }
 
 function hideInfo(imdbID) {
-	$('#info_' + imdbID).hide()
+	$('#info_' + imdbID).hide();
 }
 
 // sleep() pauses a function for a set amount of ms
@@ -386,9 +382,9 @@ function sleep(ms) {
 }
 
 // get uid from current url
-function GetURLParameter(sParam) {
-	var sPageURL = window.location.search.substring(1);
-	var sURLVariables = sPageURL.split('&');
+function GetURLParameter(param) {
+	var pageURL = window.location.search.substring(1);
+	var sURLVariables = pageURL.split('&');
 	for (var i = 0; i < sURLVariables.length; i++) {
 		var sParameterName = sURLVariables[i].split('=');
 		if (sParameterName[0] == sParam) {
@@ -403,11 +399,8 @@ var sharedUID = GetURLParameter("uid");
 function copyShare() {
 	var copyText = $('#shareLink');
 	console.log(copyText);
-	//var selectionStart = copyText[0].selectionStart;
-	//var selectionEnd = copyText[0].selectionEnd;
 	// Select the link to copy
 	copyText.select();
-	//copyText[0].setSelectionRange(selectionStart, selectionEnd);
 	// Copy text in text field
 	document.execCommand("copy");
 	// Tell user it's copied

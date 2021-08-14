@@ -47,7 +47,7 @@
           </div>
           <h4><a href="#homePageNotLogin">Return Home</a></h4>
           <h2>Sign Up</h2>
-          <button id="openForm" onClick="openForm()">Sign up with email</button>
+          <button class="openForm" onClick="openForm()">Sign up with email</button>
         </center>
 
         <!-- Sign up email -->
@@ -65,7 +65,7 @@
         <!-- Sign up Google -->
         <div class="container" id="signupGoogle">
           <center>
-            <img src="/images/btn_google_signin_light_focus_web.png" id="googleSignInButton" alt="Sign in with Google">
+            <img src="/images/btn_google_signin_light_focus_web.png" class="googleSignInButton" alt="Sign in with Google">
           </center>
         </div>
       </div>
@@ -79,7 +79,7 @@
         </div>
         <h4><a href="#homePageNotLogin">Return Home</a></h4>
         <h2>Login</h2>
-        <button id="openForm" onClick="openForm()">Sign in with email</button>
+        <button class="openForm" onClick="openForm()">Sign in with email</button>
       </center>
 
       <!-- Sign in email -->
@@ -98,7 +98,7 @@
       <!-- Sign in Google -->
       <div class="container" id="signinGoogle">
         <center>
-          <img src="/images/btn_google_signin_light_focus_web.png" id="googleSignInButton" alt="Sign in with Google">
+          <img src="/images/btn_google_signin_light_focus_web.png" class="googleSignInButton" alt="Sign in with Google">
         </center>
       </div>
     </div>
@@ -115,7 +115,7 @@
             <li><a href="#watchList">Watch List</a></li>
             <li><a href="#alreadyWatched">Have-Watched List</a></li>
             <li><a href="#aboutPage">About</a></li>
-            <li><a id="logoutWatched">Logout</a></li>
+            <li><a id="logout">Logout</a></li>
           </ul>
         </div>
         <!-- /navbar -->
@@ -127,7 +127,8 @@
           </div>
         </center>
         <h2>Search for Movies</h2>
-        <div id="dataEntry" <label for="addToList">Enter the movie you would like to watch: </label>
+        <div id="dataEntry">
+          <label for="addToList">Enter the movie you would like to watch: </label>
           <input id="addToList" placeholder="Movie or TV show title">
           <button type="submit" id="search">Search</button>
         </div>
@@ -146,7 +147,7 @@
             <li><a href="#watchList" class="ui-btn-active">Watch List</a></li>
             <li><a href="#alreadyWatched">Have-Watched List</a></li>
             <li><a href="#aboutPage">About</a></li>
-            <li><a id="logoutWatched">Logout</a></li>
+            <li><a id="logoutWatch">Logout</a></li>
           </ul>
         </div>
         <!-- /navbar -->
@@ -200,7 +201,7 @@
             <li><a href="#watchList">Watch List</a></li>
             <li><a href="#alreadyWatched">Have-Watched List</a></li>
             <li><a href="#aboutPage">About</a></li>
-            <li><a id="logoutWatched">Logout</a></li>
+            <li><a id="logoutShared">Logout</a></li>
           </ul>
         </div>
         <!-- /navbar -->
@@ -228,7 +229,7 @@
             <li><a href="#watchList">Watch List</a></li>
             <li><a href="#alreadyWatched">Have-Watched List</a></li>
             <li><a href="#aboutPage" class="ui-btn-active">About</a></li>
-            <li><a id="logoutWatched">Logout</a></li>
+            <li><a id="logoutAbout">Logout</a></li>
           </ul>
         </div>
         <!-- /navbar -->
@@ -248,7 +249,7 @@
           <h2>Contact Us</h2>
           <p>Have a question, comment, or suggestion? Drop us an email, we'll
             get back to you ASAP</p>
-          <a href="mailto: moviematesdev@gmail.com">Send Email</a>
+          <a href="mailto:moviematesdev@gmail.com">Send Email</a>
         </center>
       </div>
     </div>
