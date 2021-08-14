@@ -387,7 +387,7 @@ function GetURLParameter(param) {
 	var sURLVariables = pageURL.split('&');
 	for (var i = 0; i < sURLVariables.length; i++) {
 		var sParameterName = sURLVariables[i].split('=');
-		if (sParameterName[0] == sParam) {
+		if (sParameterName[0] == param) {
 			return sParameterName[1];
 		}
 	}
