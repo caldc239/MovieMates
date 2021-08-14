@@ -21,7 +21,7 @@
 
 .logo {
   margin-top: 100px;
-  margin-bottom: 35px;
+  margin-bottom: 15px;
 }
 
 #homePageLogin * .logo,
@@ -35,20 +35,12 @@ ul.searchList {
   list-style-type: none;
 }
 
-#watchListPage, #haveWatchedPage {
+#watchListPage, #haveWatchedPage, #sharedListPage {
   list-style-type: none;
-  padding: 0;
+  max-width: 75%;
 }
 
-#haveWatchedPage * li {
-  display: flex;
-  justify-content: space-around;
-}
-
-/*.checkbox-inline {
-  display: inline-block;
-}*/
-.info_img {
+img.info_img {
   height: 20px;
   width: 20px;
 }
@@ -74,5 +66,12 @@ ul.searchList {
   max-height: 100%;
   margin: auto;
   display: block;
-  /*object-fit: contain;*/
+}
+
+@media only screen and (min-width: 600px) {
+  #watchListPage, #haveWatchedPage, #sharedListPage {
+    margin: auto;
+    width: 50%;
+    padding: 2%;
+  }
 }

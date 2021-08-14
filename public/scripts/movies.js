@@ -1,6 +1,5 @@
 //global variables
 var searchResults;
-var selectedID;
 var titleForList;
 
 //pass user input to function movieSearch to return movie options
@@ -60,18 +59,12 @@ async function updateSearchList(response) {
 		console.log(e);
 		//variable to hold extracted movie.imdbID
 		var movieID = e.target.id.substring(7);
-		selectedID = movieID;
 		console.log(movieID);
 		// iterate through search responses to find matching imdbID
 		for (var i = 0; i < searchResults.Search.length; i++) {
 			if (searchResults.Search[i].imdbID == movieID) {
 				await db.collection('movies').doc(movieID).set(searchResults.Search[i]);
 				// add movieID to user's watch list collection
-				/*const usersRef = db.collection('users').doc(auth.currentUser.uid);
-				const doc = await usersRef.get().then((doc) => {
-					return doc;
-				});
-				if (!doc.exists) {*/
 				await db.collection('users').doc(auth.currentUser.uid).set({
 					id: auth.currentUser.uid
 				}, {
@@ -81,9 +74,6 @@ async function updateSearchList(response) {
 					movie: movieID,
 					watched: false
 				});
-				/*} else {
-					console.log('hi');
-				}*/
 				// clear searchResponse list and search bar
 				$('#searchResponse').empty();
 				$('#addToList').val('');
@@ -123,7 +113,7 @@ async function updateList(listID) {
 				});
 				titleForList = yourNewData.Title;
 
-				// displays titles in checkbox list 
+				// displays titles in checkbox list
 				html += '<li><label class="checkbox-inline">';
 				html += '<input type="checkbox" id="chbx_' + yourNewData.imdbID +
 					'" value ="" onClick="checkboxListener(\'watchListPage\')">';
@@ -145,7 +135,9 @@ async function updateList(listID) {
 			}
 			html += '<button type="button" id="addBtn" disabled>Watched!</button>';
 			html += '<button type="button" id="deleteBtn" disabled>Delete</button>';
-			html += '<input type="text" value="moviemates-318318.web.app/?uid=' + auth.currentUser.uid + '"id="shareLink" readonly>';
+			html += '<h3>Share your list with friends!</h3>';
+			html += '<p>Copy the link below:</p>';
+			html += '<br><input type="text" value="moviemates-318318.web.app/?uid=' + auth.currentUser.uid + '"id="shareLink" readonly>';
 			html += '<button onClick="copyShare()">Copy link</button>';
 			$('#' + listID).html(html);
 
