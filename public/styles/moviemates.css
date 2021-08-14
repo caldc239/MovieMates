@@ -40,8 +40,23 @@ ul.searchList {
   max-width: 75%;
 }
 
-li {
-  justify-self: auto;
+.items, .items li {
+  list-style-type: none;
+  list-style-position: inside;
+  margin: 0;
+  padding: 0;
+}
+
+.items li {
+  display: flex;
+}
+
+.items li div:nth-child(1) {
+  flex-grow: 100;
+}
+
+.items li div:nth-child(2) {
+  flex-shrink: 1;
 }
 
 img.info_img {

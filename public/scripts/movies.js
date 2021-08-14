@@ -1,6 +1,20 @@
 //global variables
 var searchResults;
 
+// Retrieve user input from search bar via click or enter
+// and pass to movieSearch function
+$(document).on('keypress', '#addToList', ((e) => {
+	if (e.which === 13) {
+		$('#search').click();
+	}
+}));
+
+$(document).on('click', '#search', ((e) => {
+	e.preventDefault();
+	var movieTitle = $('#addToList').val();
+	movieSearch(movieTitle, updateSearchList);
+}));
+
 //pass user input to function movieSearch to return movie options
 function movieSearch(title, callback) {
 	var encoded = encodeURIComponent(title);
@@ -22,20 +36,6 @@ function movieSearch(title, callback) {
 		searchResults = JSON.parse(JSON.stringify(response));
 	});
 }
-
-// Retrieve user input from search bar via click or enter
-// and pass to movieSearch function
-$(document).on('keypress', '#addToList', ((e) => {
-	if (e.which === 13) {
-		$('#search').click();
-	}
-}));
-
-$(document).on('click', '#search', ((e) => {
-	e.preventDefault();
-	var movieTitle = $('#addToList').val();
-	movieSearch(movieTitle, updateSearchList);
-}));
 
 // iterate through all responses returned by the API & display them
 // as buttons in the returned search list
@@ -107,9 +107,10 @@ async function updateList(listID) {
 			// iterate through movie list to match user's movieID to movie in database to get the title
 			var html = '';
 			html += '<div><h2>Watch List</h2></div>';
-			html += '<p>Total movies to watch: ';
+			html += '<p><b>Total movies to watch: ';
 			html += watchData.length;
-			html += '</p>';
+			html += '</b></p>';
+			html += '<ul class="items">';
 			for (var doc of watchData) {
 				var documentReference = db.collection('movies').doc(doc.movie);
 				var newWatchData = await documentReference.get().then((data) => {
@@ -117,12 +118,12 @@ async function updateList(listID) {
 				});
 
 				// displays titles in checkbox list
-				html += '<li><label class="checkbox-inline">';
+				html += '<li><div><label class="checkbox-inline">';
 				html += '<input type="checkbox" id="chbx_' + newWatchData.imdbID +
 					'" value ="" onClick="checkboxListener(\'watchListPage\')">';
 				html += newWatchData.Title;
-				html += '</label>';
-				html += '<img src="/images/Info_Simple_bw.svg" alt="info logo" class="info_img" onClick="showInfo(\'' + newWatchData.imdbID + '\')">';
+				html += '</label></div>';
+				html += '<div><img src="/images/Info_Simple_bw.svg" alt="info logo" class="info_img" onClick="showInfo(\'' + newWatchData.imdbID + '\')"></div>';
 				html += '</li>';
 
 				// hidden div
@@ -136,6 +137,7 @@ async function updateList(listID) {
 				html += '</center>';
 				html += '</div>';
 			}
+			html += '</ul>';
 			html += '<button type="button" id="addBtn" class="ui-btn ui-btn-inline" disabled>Watched!</button>';
 			html += '<button type="button" id="deleteBtn" class="ui-btn ui-btn-inline" disabled>Delete</button>';
 			html += '<h3>Share your list with friends!</h3>';
@@ -177,6 +179,7 @@ async function updateList(listID) {
 			html += '<p>Total movies you have watched: ';
 			html += watchedData.length;
 			html += '</p>';
+			html += '<ul class="items">';
 			for (var doc of watchedData) {
 				// console.log(doc);
 				var docReference = db.collection('movies').doc(doc.movie);
@@ -201,6 +204,7 @@ async function updateList(listID) {
 				html += '</center>';
 				html += '</div>';
 			}
+			html += '</ul>';
 			html += '<button type="button" id="watchBtn" class="ui-btn ui-btn-inline" disabled>Move to watch list</button>';
 			html += '<button type="button" id="dltBtn" class="ui-btn ui-btn-inline" disabled>Delete</button>';
 			$('#' + listID).html(html);
@@ -239,6 +243,7 @@ async function updateList(listID) {
 			html += '<p>Total movies to watch: ';
 			html += sharedData.length;
 			html += '</p>';
+			html += '<ul class="items">';
 			for (var doc of sharedData) {
 				var docRef = db.collection('movies').doc(doc.movie);
 				var newSharedData = await docRef.get().then((data) => {
@@ -262,6 +267,7 @@ async function updateList(listID) {
 				html += '</center>';
 				html += '</div>';
 			}
+			html += '</ul>';
 			html += '<button type="button" id="sharedAddBtn" class="ui-btn ui-btn-inline" disabled>Add to my list</button>';
 			$('#' + listID).html(html);
 			// listen for user to click add or delete buttons and call appropriate function
@@ -292,7 +298,6 @@ function checkboxCheck(listID) {
 			chbxArray.push(chbxID);
 		}
 	});
-	console.log(chbxArray);
 	return chbxArray;
 }
 
