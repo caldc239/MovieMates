@@ -73,9 +73,8 @@ async function updateSearchList(response) {
 					movie: movieID,
 					watched: false
 				});
-				// clear searchResponse list and search bar
+				// alert user movie has been added, clear search bar
 				alert('Movie added to watch list!');
-				$('#searchResponse').empty();
 				$('#addToList').val('');
 				// call updateList() function and pass watchListPage as the parameter
 				updateList('watchListPage');
@@ -83,6 +82,11 @@ async function updateSearchList(response) {
 		}
 	});
 }
+
+// clear searchResponse div when focus returns to search bar
+$('#addToList').focus(function() {
+	$('#searchResponse').empty();
+});
 
 /* iterate through the user's movielist, match the id's to the movies list,
  grab the data for each movie from the movies collection, get just the title
