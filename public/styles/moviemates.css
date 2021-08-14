@@ -14,30 +14,29 @@
   background: white;
 }
 
-#signupPage * .openForm,
-#loginPage * .openForm {
-  width: 51%;
+.openForm {
+  width: 191px !important;
 }
 
 .logo {
-  margin-top: 100px;
-  margin-bottom: 15px;
-}
-
-#homePageLogin * .logo,
-#watchList * .logo,
-#alreadyWatched * .logo {
   margin: auto;
   width: 80%
+}
+
+#homePageNotLogin * .logo,
+#loginPage * .logo,
+#signupPage * .logo {
+  margin-top: 100px;
+  margin-bottom: 15px;
 }
 
 ul.searchList {
   list-style-type: none;
 }
 
-#watchListPage, #haveWatchedPage, #sharedListPage {
+#watchListPage, #haveWatchedPage, #sharedListPage, #dataEntry, #searchResponse, #aboutContent {
   list-style-type: none;
-  max-width: 75%;
+  max-width: 100%;
 }
 
 .items, .items li {
@@ -89,15 +88,9 @@ img.info_img {
 }
 
 @media only screen and (min-width: 600px) {
-
-  #signupPage * .openForm,
-  #loginPage * .openForm {
-    width: 13.5%;
-  }
-
-  #watchListPage, #haveWatchedPage, #sharedListPage {
+  #watchListPage, #haveWatchedPage, #sharedListPage, #dataEntry, #searchResponse, #aboutContent {
     margin: auto;
-    width: 50%;
+    width: 600px;
     padding: 2%;
   }
 }

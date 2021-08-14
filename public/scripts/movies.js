@@ -186,12 +186,12 @@ async function updateList(listID) {
 				var newWatchedData = await docReference.get().then((data) => {
 					return data.data();
 				});
-				html += '<li><label class="checkbox-inline">';
+				html += '<li><div><label class="checkbox-inline">';
 				html += '<input type="checkbox" id="chbx_' + newWatchedData.imdbID +
 					'" value ="" onClick="checkboxListener(\'haveWatchedPage\')">';
 				html += newWatchedData.Title;
-				html += '</label>';
-				html += '<img src="/images/Info_Simple_bw.svg" alt="info logo" class="info_img" onClick="showInfo(\'' + newWatchedData.imdbID + '\')">';
+				html += '</label></div>';
+				html += '<div><img src="/images/Info_Simple_bw.svg" alt="info logo" class="info_img" onClick="showInfo(\'' + newWatchedData.imdbID + '\')"></div>';
 				html += '</li>';
 				// hidden div
 				html += '<div class= "infoBox" id="info_' + newWatchedData.imdbID + '">';
@@ -249,12 +249,12 @@ async function updateList(listID) {
 				var newSharedData = await docRef.get().then((data) => {
 					return data.data();
 				});
-				html += '<li><label class="checkbox-inline">';
+				html += '<li><div><label class="checkbox-inline">';
 				html += '<input type="checkbox" id="chbx_' + newSharedData.imdbID +
 					'" value ="" onClick="checkboxListener(\'sharedListPage\')">';
 				html += newSharedData.Title;
-				html += '</label>';
-				html += '<img src="/images/Info_Simple_bw.svg" alt="info logo" class="info_img" onClick="showInfo(\'' + newSharedData.imdbID + '\')">';
+				html += '</label></div>';
+				html += '<div><img src="/images/Info_Simple_bw.svg" alt="info logo" class="info_img" onClick="showInfo(\'' + newSharedData.imdbID + '\')"></div>';
 				html += '</li>';
 				// hidden div
 				html += '<div class= "infoBox" id="info_' + newSharedData.imdbID + '">';
