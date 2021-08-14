@@ -142,8 +142,8 @@ async function updateList(listID) {
 			html += '<button type="button" id="deleteBtn" class="ui-btn ui-btn-inline" disabled>Delete</button>';
 			html += '<h3>Share your list with friends!</h3>';
 			html += '<p>Copy the link below:</p>';
-			html += '<br><input type="text" value="moviemates-318318.web.app/?uid=' + auth.currentUser.uid + '"id="shareLink" readonly>';
-			html += '<button class="ui-btn ui-btn-inline" onClick="copyShare()">Copy link</button>';
+			html += '<div><input type="text" value="moviemates-318318.web.app/?uid=' + auth.currentUser.uid + '"id="shareLink" readonly></div>';
+			html += '<div><button class="ui-btn ui-btn-inline" onClick="copyShare()">Copy link</button></div>';
 			$('#' + listID).html(html);
 
 			// listen for user to click add or delete buttons and call appropriate function
@@ -176,9 +176,9 @@ async function updateList(listID) {
 
 			var html = '';
 			html += '<div><h2>Have-Watched List</h2></div>';
-			html += '<p>Total movies you have watched: ';
+			html += '<b><p>Total movies you have watched: ';
 			html += watchedData.length;
-			html += '</p>';
+			html += '</p></b>';
 			html += '<ul class="items">';
 			for (var doc of watchedData) {
 				// console.log(doc);
@@ -240,9 +240,9 @@ async function updateList(listID) {
 
 			var html = '';
 			html += '<div><h2>Your Friend\'s Watch List</h2></div>';
-			html += '<p>Total movies to watch: ';
+			html += '<b><p>Total movies on your friend\'s list: ';
 			html += sharedData.length;
-			html += '</p>';
+			html += '</p></b>';
 			html += '<ul class="items">';
 			for (var doc of sharedData) {
 				var docRef = db.collection('movies').doc(doc.movie);

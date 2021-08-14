@@ -71,33 +71,35 @@
 
     <!-- Sign in Page -->
     <div data-role="page" id="loginPage">
-      <center>
-        <div class="logo">
-          <img src="/images/moviemates_logo_people.svg" alt="MovieMates logo">
-        </div>
-        <h4><a href="#homePageNotLogin">Return Home</a></h4>
-        <h2>Login</h2>
-        <button class="openForm" onClick="openForm()">Sign in with email</button>
-      </center>
-
-      <!-- Sign in email -->
-      <form id="loginForm">
-        <div class="container">
-          <label>Username: </label>
-          <input type="text" placeholder="Enter Username" name="username" id="loginEmail" required>
-          <label>Password: </label>
-          <input type="password" placeholder="Enter Password" name="password" id="loginPassword" required>
-          <button type="submit">Login</button>
-          <button type="button" class="cancelbtn" onClick="closeForm()">Cancel</button>
-          <p class="error" style="color:red; text-align:center"></p>
-        </div>
-      </form>
-
-      <!-- Sign in Google -->
-      <div class="container" id="signinGoogle">
+      <div data-role="content">
         <center>
-          <img src="/images/btn_google_signin_light_focus_web.png" class="googleSignInButton" alt="Sign in with Google">
+          <div class="logo">
+            <img src="/images/moviemates_logo_people.svg" alt="MovieMates logo">
+          </div>
+          <h4><a href="#homePageNotLogin">Return Home</a></h4>
+          <h2>Login</h2>
+          <button class="openForm" onClick="openForm()">Sign in with email</button>
         </center>
+
+        <!-- Sign in email -->
+        <form id="loginForm">
+          <div class="container">
+            <label>Username: </label>
+            <input type="text" placeholder="Enter Username" name="username" id="loginEmail" required>
+            <label>Password: </label>
+            <input type="password" placeholder="Enter Password" name="password" id="loginPassword" required>
+            <button type="submit">Login</button>
+            <button type="button" class="cancelbtn" onClick="closeForm()">Cancel</button>
+            <p class="error" style="color:red; text-align:center"></p>
+          </div>
+        </form>
+
+        <!-- Sign in Google -->
+        <div class="container" id="signinGoogle">
+          <center>
+            <img src="/images/btn_google_signin_light_focus_web.png" class="googleSignInButton" alt="Sign in with Google">
+          </center>
+        </div>
       </div>
     </div>
 
@@ -127,7 +129,7 @@
         <div id="dataEntry">
           <h2>Search for Movies</h2>
           <label for="addToList">Enter the movie you would like to watch: </label>
-          <input id="addToList" placeholder="Movie or TV show title" autofocus>
+          <input id="addToList" placeholder="Movie title" autofocus>
           <button type="submit" id="search">Search</button>
         </div>
         <div id="searchResponse">
@@ -210,10 +212,9 @@
           <div class="logo">
             <img src="/images/moviemates_logo_people.svg" alt="MovieMates logo">
           </div>
-          <h2>Movie List</h2>
         </center>
-      </div>
-      <div id="sharedListPage">
+        <div id="sharedListPage">
+        </div>
       </div>
     </div>
 
