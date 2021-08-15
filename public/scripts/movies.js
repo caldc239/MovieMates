@@ -1,8 +1,8 @@
-//global variables
+// global variables
 var searchResults;
 
-// Retrieve user input from search bar via click or enter
-// and pass to movieSearch function
+/* Retrieve user input from search bar via click or enter
+   and pass to movieSearch function*/
 $(document).on('keypress', '#addToList', ((e) => {
 	if (e.which === 13) {
 		$('#search').click();
@@ -15,7 +15,7 @@ $(document).on('click', '#search', ((e) => {
 	movieSearch(movieTitle, updateSearchList);
 }));
 
-//pass user input to function movieSearch to return movie options
+// pass user input to function movieSearch to return movie options
 function movieSearch(title, callback) {
 	var encoded = encodeURIComponent(title);
 	//rapidapi Movie Database GET by search function
@@ -37,13 +37,13 @@ function movieSearch(title, callback) {
 	});
 }
 
-// iterate through all responses returned by the API & display them
-// as buttons in the returned search list
+/* iterate through all responses returned by the API & display them
+   as buttons in the returned search list */
 async function updateSearchList(response) {
 	var html = '';
 	html += '<div>' + '<h2>Search Results</h2>';
 	html += '</div>';
-	html += '<ul class="searchList">';
+	html += '<ul id="searchList" class="items">';
 	response.Search.forEach((movie) => {
 		html += '<li><label><input type="button" id="button_' + movie.imdbID + '" value="';
 		html += movie.Title;
@@ -52,23 +52,26 @@ async function updateSearchList(response) {
 	html += '</ul>';
 	$('#searchResponse').html(html);
 
-	//listen for user to click desired movie
-	$('.searchList * :button').on('click', async function(e) {
+	// listen for user to click desired movie
+	$('#searchList * :button').on('click', async function(e) {
 		e.preventDefault();
 		console.log(e);
-		//variable to hold extracted movie.imdbID
+		// variable to hold extracted movie.imdbID
 		var movieID = e.target.id.substring(7);
 		console.log(movieID);
 		// iterate through search responses to find matching imdbID
 		for (var i = 0; i < searchResults.Search.length; i++) {
 			if (searchResults.Search[i].imdbID == movieID) {
 				await db.collection('movies').doc(movieID).set(searchResults.Search[i]);
-				// add movieID to user's watch list collection
+
+				// create user doc with uid as id field if it doesn't exist
 				await db.collection('users').doc(auth.currentUser.uid).set({
 					id: auth.currentUser.uid
 				}, {
+					// merges user doc with subcollection docs
 					merge: true
 				});
+				// add movieID to user's watch list collection
 				await db.collection('users').doc(auth.currentUser.uid).collection('movieList').doc(movieID).set({
 					movie: movieID,
 					watched: false
@@ -76,8 +79,6 @@ async function updateSearchList(response) {
 				// alert user movie has been added, clear search bar
 				alert('Movie added to watch list!');
 				$('#addToList').val('');
-				// call updateList() function and pass watchListPage as the parameter
-				updateList('watchListPage');
 			}
 		}
 	});
@@ -90,8 +91,8 @@ $('#addToList').focus(function() {
 
 /* iterate through the user's movielist, match the id's to the movies list,
  grab the data for each movie from the movies collection, get just the title
- from the data, and display the titles in a checklist in the "watch list" or
- "have-watched list" section of the user's movie page */
+ from the data, and display the titles in a checklist in the "watch list,"
+ "have-watched list," or "shared list" section of the user's movie page */
 async function updateList(listID) {
 	switch (listID) {
 		case "watchListPage":
@@ -104,13 +105,14 @@ async function updateList(listID) {
 				});
 				return temp;
 			});
-			// iterate through movie list to match user's movieID to movie in database to get the title
 			var html = '';
 			html += '<div><h2>Watch List</h2></div>';
 			html += '<p><b>Total movies to watch: ';
 			html += watchData.length;
 			html += '</b></p>';
 			html += '<ul class="items">';
+
+			// iterate through movie list to match user's movieID to movie in database to get the title
 			for (var doc of watchData) {
 				var documentReference = db.collection('movies').doc(doc.movie);
 				var newWatchData = await documentReference.get().then((data) => {
@@ -173,15 +175,15 @@ async function updateList(listID) {
 				});
 				return temp;
 			});
-
 			var html = '';
 			html += '<div><h2>Have-Watched List</h2></div>';
 			html += '<b><p>Total movies you have watched: ';
 			html += watchedData.length;
 			html += '</p></b>';
 			html += '<ul class="items">';
+
+			// iterate through movie list to match user's movieID to movie in database to get the title
 			for (var doc of watchedData) {
-				// console.log(doc);
 				var docReference = db.collection('movies').doc(doc.movie);
 				var newWatchedData = await docReference.get().then((data) => {
 					return data.data();
@@ -209,6 +211,7 @@ async function updateList(listID) {
 			html += '<button type="button" id="watchBtn" class="ui-btn ui-btn-inline" disabled>Move to watch list</button>';
 			html += '<button type="button" id="dltBtn" class="ui-btn ui-btn-inline" disabled>Delete</button>';
 			$('#' + listID).html(html);
+
 			// listen for user to click move or dlt buttons and call appropriate function
 			$('#watchBtn').click(function(e) {
 				e.preventDefault();
@@ -238,13 +241,14 @@ async function updateList(listID) {
 				});
 				return temp;
 			});
-
 			var html = '';
 			html += '<div><h2>Your Friend\'s Watch List</h2></div>';
 			html += '<b><p>Total movies on your friend\'s list: ';
 			html += sharedData.length;
 			html += '</p></b>';
 			html += '<ul class="items">';
+
+			// iterate through movie list to match user's movieID to movie in database to get the title
 			for (var doc of sharedData) {
 				var docRef = db.collection('movies').doc(doc.movie);
 				var newSharedData = await docRef.get().then((data) => {
@@ -272,6 +276,7 @@ async function updateList(listID) {
 			html += '</ul>';
 			html += '<button type="button" id="sharedAddBtn" class="ui-btn ui-btn-inline" disabled>Add to my list</button>';
 			$('#' + listID).html(html);
+
 			// listen for user to click add or delete buttons and call appropriate function
 			$('#sharedAddBtn').click(function(e) {
 				e.preventDefault();
@@ -303,8 +308,8 @@ function checkboxCheck(listID) {
 	return chbxArray;
 }
 
-// checkboxListener() activates buttons on the appropriate list
-// (listID) if any checkbox is checked
+/* checkboxListener() activates buttons on the appropriate list
+   (listID) if any checkbox is checked */
 function checkboxListener(listID) {
 	var list = checkboxCheck(listID);
 	// activate buttons for "watched" and "delete"
@@ -323,8 +328,8 @@ function checkboxListener(listID) {
 	}
 }
 
-// moveToWatchedList() moves checked movies from "watch" to "have-watched" list
-// by setting the "watched" field to true
+/* moveToWatchedList() moves checked movies from "watch" to "have-watched" list
+   by setting the "watched" field to true */
 async function moveToWatchedList(listID) {
 	var temp = checkboxCheck(listID);
 	console.log(temp);
@@ -336,8 +341,8 @@ async function moveToWatchedList(listID) {
 	}
 }
 
-// moveToWatchList() moves checked movies from "have-watched" to "watch" list
-// by setting the "watched" field to false
+/* moveToWatchList() moves checked movies from "have-watched" to "watch" list by
+   setting the "watched" field to false */
 async function moveToWatchList(listID) {
 	// get array of checked movies
 	var temp = checkboxCheck(listID);
@@ -350,8 +355,8 @@ async function moveToWatchList(listID) {
 	}
 }
 
-// deleteFromList() removes checked movies from a given list by deleting the doc
-// from the user's collection in the database
+/* deleteFromList() removes checked movies from a given list by deleting the doc
+   from the user's collection in the database */
 async function deleteFromList(listID) {
 	// get array of checked movies
 	var temp = checkboxCheck(listID);
