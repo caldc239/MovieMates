@@ -48,7 +48,7 @@ signupForm.submit((e) => {
 
 // Google Signup/SignIn
 const GoogleAuth = new firebase.auth.GoogleAuthProvider();
-$(document).on('click', '#signupGoogle, #signinGoogle', ((e) => {
+$(document).on('click', '.googleSignInButton', ((e) => {
 	e.preventDefault();
 	firebase.auth().signInWithPopup(GoogleAuth).then(() => {});
 }));

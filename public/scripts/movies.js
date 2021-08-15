@@ -193,6 +193,7 @@ async function updateList(listID) {
 				html += '</label></div>';
 				html += '<div><img src="/images/Info_Simple_bw.svg" alt="info logo" class="info_img" onClick="showInfo(\'' + newWatchedData.imdbID + '\')"></div>';
 				html += '</li>';
+
 				// hidden div
 				html += '<div class= "infoBox" id="info_' + newWatchedData.imdbID + '">';
 				html += '<center><p>';
@@ -256,6 +257,7 @@ async function updateList(listID) {
 				html += '</label></div>';
 				html += '<div><img src="/images/Info_Simple_bw.svg" alt="info logo" class="info_img" onClick="showInfo(\'' + newSharedData.imdbID + '\')"></div>';
 				html += '</li>';
+
 				// hidden div
 				html += '<div class= "infoBox" id="info_' + newSharedData.imdbID + '">';
 				html += '<center><p>';
@@ -386,11 +388,6 @@ function hideInfo(imdbID) {
 	$('#info_' + imdbID).hide();
 }
 
-// sleep() pauses a function for a set amount of ms
-function sleep(ms) {
-	return new Promise(resolve => setTimeout(resolve, ms));
-}
-
 // get uid from current url
 function GetURLParameter(param) {
 	var pageURL = window.location.search.substring(1);
@@ -417,7 +414,13 @@ function copyShare() {
 	alert("Link copied to clipboard!");
 }
 
+
+// sleep() pauses a function for a set amount of ms
+// currently using await instead, may need this in future
+function sleep(ms) {
+	return new Promise(resolve => setTimeout(resolve, ms));
+}
 // TODO:
 // sort lists
 // add toast for added to watch list
-// move logout button?
+// move logout button
