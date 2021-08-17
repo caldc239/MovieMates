@@ -65,12 +65,13 @@ async function updateSearchList(response) {
 				await db.collection('movies').doc(movieID).set(searchResults.Search[i]);
 
 				// create user doc with uid as id field if it doesn't exist
-				await db.collection('users').doc(auth.currentUser.uid).set({
-					id: auth.currentUser.uid
+				/*await db.collection('users').doc(auth.currentUser.uid).set({
+					id: auth.currentUser.uid,
 				}, {
 					// merges user doc with subcollection docs
 					merge: true
-				});
+				});*/
+
 				// add movieID to user's watch list collection
 				await db.collection('users').doc(auth.currentUser.uid).collection('movieList').doc(movieID).set({
 					movie: movieID,

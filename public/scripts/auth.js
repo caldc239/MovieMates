@@ -35,10 +35,18 @@ signupForm.submit((e) => {
 	// User info
 	const email = $('#signupEmail').val();
 	const password = $('#signupPassword').val();
+	const fName = $('#firstName').val();
+	const lName = $('#lastName').val();
 
 	// Sign up the user
 	auth.createUserWithEmailAndPassword(email, password).then((cred) => {
 		console.log(cred.user);
+		// create user doc in users collection with uid as doc id 
+		db.collection('users').doc(cred.user.uid).set({
+			firstName: fName,
+			lastName: lName,
+			id: cred.user.uid
+		});
 		// Clear form
 		$('#signupForm').trigger("reset");
 	}).catch((err) => {
